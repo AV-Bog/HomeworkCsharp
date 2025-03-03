@@ -40,86 +40,89 @@ public class Node<T> (char symbol)
         }
     }
     
-    public static bool RemoveNode(string key, Node<T>? node)
+    public bool RemoveNode(string key)
     {
         if (string.IsNullOrEmpty(key))
         {
-            if (node != null && node.IsWord)
+            if (IsWord)
             {
-                node.IsWord = false;
+                IsWord = false;
                 return true;
             }
             return false;
         }
         
-        var subnode = node?.TryFind(key[0]);
+        var subnode = TryFind(key[0]);
         if (subnode == null)
         {
             return false;
         }
             
-        bool result = RemoveNode(key[1..], subnode);
+        bool result = subnode.RemoveNode(key[1..]);
 
         if (result)
         {
             if (subnode.SubNodes.Count == 0 && !subnode.IsWord)
             {
-                node?.SubNodes.Remove(key[0]);
+                SubNodes.Remove(key[0]);
             }
         }
 
         return result;
     }
     
-    public static bool SearchNode(string key, Node<T>? node)
+    public bool SearchNode(string key)
     {
         var result = false;
         if (string.IsNullOrEmpty(key))
         {
-            if (node != null && node.IsWord)
+            if (IsWord)
             {
                 return true;
             }
         }
         else
         {
-            var subnode = node?.TryFind(key[0]);
+            var subnode = TryFind(key[0]);
             if (subnode != null)
             {
-                result = SearchNode(key[1..], subnode);
+                result = subnode.SearchNode(key[1..]);
             }
         }
 
         return result;
     }
     
-    public static int CountingWordsWithThisPrefix(String prefix, Node<T>? node)
+    public int CountingWordsWithThisPrefix(String prefix)
     {
-        if (node == null)
-        {
-            return 0;
-        }
+        var currentNode = this;
         
-        int result = 0;
         while (!string.IsNullOrEmpty(prefix))
         {
-            node = node.TryFind(prefix[0]);
+            currentNode = currentNode.TryFind(prefix[0]);
+            if (currentNode == null)
+            {
+                return 0;
+            }
             prefix = prefix[1..];
         }
         
+        return CountWords(currentNode);
+    }
+
+    private int CountWords(Node<T> node)
+    {
+        int result = 0;
+
         if (node.IsWord)
         {
             ++result;
         }
 
-        if (node.SubNodes.Count > 0)
+        foreach (var subNode in node.SubNodes.Values)
         {
-            foreach (var keyValuePair in node.SubNodes)
-            {
-                result += CountingWordsWithThisPrefix(prefix, keyValuePair.Value);
-            }
+            result += CountWords(subNode);
         }
-        
         return result;
     }
 }

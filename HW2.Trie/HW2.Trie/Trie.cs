@@ -10,7 +10,7 @@ public class Trie<T>(int size = 0)
     /// The root node of the Trie. It represents the starting point of the tree
     /// and is initialized with a default symbol ('\0').
     /// </summary>
-    private readonly Node<T>? _root = new Node<T>('\0');
+    private readonly Node<T> _root = new Node<T>('\0');
     
     /// <summary>
     /// Gets the number of unique words in the tree
@@ -41,7 +41,7 @@ public class Trie<T>(int size = 0)
     /// <returns>True if such a word existed in the tree.</returns>
     public bool Remove(string key)
     {
-        bool result = Node<T>.RemoveNode(key, _root);
+        bool result = _root.RemoveNode(key);
         if (result)
         {
             --Size;
@@ -56,7 +56,7 @@ public class Trie<T>(int size = 0)
     /// <returns>True if such a word is contained in the tree.</returns>
     public bool Contains(string key)
     {
-        return Node<T>.SearchNode(key, _root);
+        return _root.SearchNode(key);
     }
 
     /// <summary>
@@ -66,6 +66,6 @@ public class Trie<T>(int size = 0)
     /// <returns>Returns the number of words in the tree that start with this prefix.</returns>
     public int HowManyStartsWithPrefix(String prefix)
     {
-        return Node<T>.CountingWordsWithThisPrefix(prefix, _root);
+        return _root.CountingWordsWithThisPrefix(prefix);
     }
 }
