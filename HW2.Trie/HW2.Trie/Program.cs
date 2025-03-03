@@ -2,7 +2,7 @@
 
 if (!Tests.TestsTrie())
 {
-    Console.WriteLine("Ошибка: ");
+    Console.WriteLine("Не все тесты прошли");
     return 1;
 }
 
