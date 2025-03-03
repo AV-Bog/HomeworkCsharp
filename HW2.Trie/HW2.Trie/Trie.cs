@@ -4,22 +4,18 @@ namespace HW2.Trie;
 /// This prefixTree.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class Trie<T>
+public class Trie<T>(int size = 0)
 {
-    private readonly Node<T>? _root;
+    /// <summary>
+    /// The root node of the Trie. It represents the starting point of the tree
+    /// and is initialized with a default symbol ('\0').
+    /// </summary>
+    private readonly Node<T>? _root = new Node<T>('\0');
+    
     /// <summary>
     /// Gets the number of unique words in the tree
     /// </summary>
-    public int Size { get; set; }
-
-    /// <summary>
-    /// Trie
-    /// </summary>
-    public Trie()
-    {
-        _root = new Node<T>('\0');
-        Size = 0;
-    }
+    public int Size { get; set; } = size;
 
     /// <summary>
     /// Adds a word to the tree
@@ -30,7 +26,7 @@ public class Trie<T>
     {
         if (!Contains(key))
         {
-            Node<T>.AddNode(key, _root); 
+            _root?.AddNode(key); 
             ++Size;
             return true;
         }

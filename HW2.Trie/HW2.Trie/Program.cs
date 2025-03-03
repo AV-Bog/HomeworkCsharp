@@ -2,6 +2,7 @@
 
 if (!Tests.TestsTrie())
 {
+    Console.WriteLine("Ошибка: ");
     return 1;
 }
 

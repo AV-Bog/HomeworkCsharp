@@ -18,25 +18,24 @@ public class Node<T> (char symbol)
         }
     }
     
-    public static void AddNode(string key, Node<T>? node)
+    public void AddNode(string key)
     {
         if (string.IsNullOrEmpty(key))
         {
-            if (node != null) node.IsWord = true;
+            IsWord = true;
         }
         else
         {
             var symbol = key[0];
-            var subnode = node?.TryFind(symbol);
-            if (subnode != null)
+            if (SubNodes.TryGetValue(symbol, out var subnode))
             {
-                AddNode(key[1..], subnode);
+                subnode?.AddNode(key[1..]);
             }
             else
             {
-                var newNode = new Node<T>(key[0]);
-                node?.SubNodes.Add(key[0], newNode);
-                AddNode(key.Substring(1), newNode);
+                var newNode = new Node<T>(symbol);
+                SubNodes.Add(symbol, newNode);
+                newNode.AddNode(key[1..]);
             }
         }
     }
@@ -59,7 +58,7 @@ public class Node<T> (char symbol)
             return false;
         }
             
-        bool result = RemoveNode(key.Substring(1), subnode);
+        bool result = RemoveNode(key[1..], subnode);
 
         if (result)
         {
@@ -79,8 +78,7 @@ public class Node<T> (char symbol)
         {
             if (node != null && node.IsWord)
             {
-                result = true;
-                return result;
+                return true;
             }
         }
         else
@@ -88,7 +86,7 @@ public class Node<T> (char symbol)
             var subnode = node?.TryFind(key[0]);
             if (subnode != null)
             {
-                result = SearchNode(key.Substring(1), subnode);
+                result = SearchNode(key[1..], subnode);
             }
         }
 
@@ -97,19 +95,24 @@ public class Node<T> (char symbol)
     
     public static int CountingWordsWithThisPrefix(String prefix, Node<T>? node)
     {
+        if (node == null)
+        {
+            return 0;
+        }
+        
         int result = 0;
         while (!string.IsNullOrEmpty(prefix))
         {
-            node = node?.TryFind(prefix[0]);
-            prefix = prefix.Substring(1);
+            node = node.TryFind(prefix[0]);
+            prefix = prefix[1..];
         }
         
-        if (node != null && node.IsWord)
+        if (node.IsWord)
         {
             ++result;
         }
 
-        if (node != null && node.SubNodes.Count > 0)
+        if (node.SubNodes.Count > 0)
         {
             foreach (var keyValuePair in node.SubNodes)
             {
