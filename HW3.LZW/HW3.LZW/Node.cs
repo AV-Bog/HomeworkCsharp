@@ -1,25 +1,25 @@
 namespace HW3.LZW;
 
-public class Node (char symbol)
+public class Node (byte symbol)
 {
-    private char Symbol { get; } = symbol;
-    private Dictionary<char, Node> SubNodes { get; } = new();
+    private byte Symbol { get; } = symbol;
+    private Dictionary<byte, Node> SubNodes { get; } = new();
     private int Code { get; set; } = -1;
     
-    public Node? TryFind(char symbol)
+    public Node? TryFind(byte symbol)
     {
         return SubNodes.TryGetValue(symbol, out var node) ? node : null;
     }
     
-    public void AddNode(string key, int code)
+    public void AddNode(byte[] key, int code)
     {
-        if (string.IsNullOrEmpty(key))
+        if (key.Length == 0)
         {
             Code = code;
         }
         else
         {
-            var symbol = key[0];
+            byte symbol = key[0];
             if (!SubNodes.TryGetValue(symbol, out var subnode))
             {
                 subnode = new Node(symbol);
@@ -29,9 +29,9 @@ public class Node (char symbol)
         }
     }
     
-    public bool TryGetCode(string key, out int code)
+    public bool TryGetCode(byte[] key, out int code)
     {
-        if (string.IsNullOrEmpty(key))
+        if (key.Length == 0)
         {
             code = Code;
             return Code != -1;

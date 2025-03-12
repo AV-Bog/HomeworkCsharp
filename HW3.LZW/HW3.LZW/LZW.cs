@@ -2,70 +2,76 @@ namespace HW3.LZW;
 
 public static class LZW
 {
-    public static List<int> Compress(string input)
+    public static List<int> Compress(byte[] input)
     {
         var trie = new Trie();
         var output = new List<int>();
-        string current = "";
+        int start = 0;
 
-        foreach (var c in input)
+        while (start < input.Length)
         {
-            string comdined = current + c;
-            if (trie.TryGetCode(comdined, out _))
+            int end = start + 1;
+            while (end <= input.Length && trie.TryGetCode(input[start..end], out _))
             {
-                current = comdined;
+                end++;
+            }
+
+            if (end > start + 1)
+            {
+                trie.TryGetCode(input[start..(end - 1)], out int code);
+                output.Add(code);
             }
             else
             {
-                trie.TryGetCode(current, out int code);
+                trie.TryGetCode(input[start..end], out int code);
                 output.Add(code);
-                trie.Add(comdined);
-                current = c.ToString();
             }
-        }
 
-        if (!string.IsNullOrEmpty(current))
-        {
-            trie.TryGetCode(current, out int code);
-            output.Add(code);
+            if (end <= input.Length)
+            {
+                trie.Add(input[start..end]);
+            }
+
+            start = end - 1;
         }
         
         return output;
     }
 
-    public static string Decompress(List<int> compressed)
+    public static byte[] Decompress(List<int> compressed)
     {
-        var dictionary = new Dictionary<int, string>();
+        var dictionary = new Dictionary<int, byte[]>();
         for (int i = 0; i < 256; i++)
         {
-            dictionary[i] = ((char)i).ToString();
+            dictionary[i] = new byte[] { (byte)i };
         }
         
-        string current = dictionary[compressed[0]];
-        string output = current;
+        byte[] current = dictionary[compressed[0]];
+        var output = new List<byte>(current);
         int nextCode = 256;
         
         for (int i = 1; i < compressed.Count; i++)
         {
             int code = compressed[i];
-            string entry; //хз как подругому
+            byte[] entry; //хз как подругому
+            
             if (dictionary.ContainsKey(code))
             {
-                entry = dictionary[compressed[i]];
+                entry = dictionary[code];
             }
             else if (code == nextCode)
             {
-                entry = current + current[0];
+                entry = current.Concat(new byte[] { current[0] }).ToArray();
             }
             else
             {
                 throw new Exception("Invalid code lololololol");
             }
 
-            output += entry;
-            dictionary[nextCode++] = current + entry[0];
+            output.AddRange(entry);
+            dictionary[nextCode++] = current.Concat(new byte[] { entry[0] }).ToArray();
             current = entry;
         }
-        return output;
+        return output.ToArray();
     }
 }
