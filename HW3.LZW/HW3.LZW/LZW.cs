@@ -2,7 +2,22 @@ namespace HW3.LZW;
 
 public static class LZW
 {
-    public static List<int> Compress(byte[] input)
+    public static void CompressFile(string inputFile, string outputFile)
+    {
+        byte[] input = File.ReadAllBytes(inputFile);
+        var (bvtOutput, bwtPosition) = BWT.Direct(input);
+        var compressed = Compress(bvtOutput);
+
+        using (var writer = new BinaryWriter(File.Open(outputFile, FileMode.Create)))
+        {
+            writer.Write(bwtPosition);
+            foreach (int code in compressed)
+            {
+                writer.Write(code);
+            }
+        }
+    }
+    private static List<int> Compress(byte[] input)
     {
         var trie = new Trie();
         var output = new List<int>();
@@ -38,7 +53,22 @@ public static class LZW
         return output;
     }
 
-    public static byte[] Decompress(List<int> compressed)
+    public static void DecompressFile(string inputFile, string outputFile)
+    {
+        using (var reader = new BinaryReader(File.Open(outputFile, FileMode.Open)))
+        {
+            int bwtPosition = reader.ReadInt32();
+            var compressed = new List<int>();
+            while (reader.BaseStream.Position < reader.BaseStream.Length)
+            {
+                compressed.Add(reader.ReadInt32());
+            }
+            byte[] bwtOutput = LZW.Decompress(compressed);
+            byte[] original = BWT.Reverse(bwtOutput, bwtPosition);
+            File.WriteAllBytes(outputFile, original);
+        }
+    }
+    private static byte[] Decompress(List<int> compressed)
     {
         var dictionary = new Dictionary<int, byte[]>();
         for (int i = 0; i < 256; i++)

@@ -4,67 +4,76 @@ using System.Text;
 
 public static class BWT
 {
-    public static (string outputStr, int position) Direct(string inputStr)
+    public static (byte[] output, int position) Direct(byte[] input)
     {
-        int length = inputStr.Length;
-        string[] stringArray = new string[length];
-        stringArray[0] = inputStr;
-        for (int i = 1; i < length; i++)
-        {
-            stringArray[i] = string.Concat(stringArray[i-1].Substring(1), stringArray[i-1][0]);
-        }
-        
-        Array.Sort(stringArray, StringComparer.OrdinalIgnoreCase);
-    
-        string outputStr = "";
-        int outputNum = 0;
+        int length = input.Length;
+        byte[][] rotation = new byte[length][];
         for (int i = 0; i < length; i++)
         {
-            outputStr += stringArray[i][length - 1];
-            if (inputStr == stringArray[i])
+            rotation[i] = new byte[length];
+            for (int j = 0; j < length; j++)
             {
-                outputNum = i;
+                rotation[i][j] = input[(i + j) % length];
             }
         }
-        return (outputStr, outputNum);
+
+        Array.Sort(rotation, (a, b) =>
+        {
+            for (int i = 0; i < length; i++)
+            {
+                if (a[i] < b[i]) return -1;
+                if (a[i] > b[i]) return 1;
+            }
+
+            return 0;
+        });
+    
+        byte[] output = new byte[length];
+        int position = 0;
+        for (int i = 0; i < length; i++)
+        {
+            output[i] = rotation[i][length - 1];
+            if (rotation[i].SequenceEqual(input))
+            {
+                position = i;
+            }
+        }
+        return (output, position);
     }
     
-    public static string Reverse(string s, int k)
+    public static byte[] Reverse(byte[] input, int position)
     {
-        int length = s.Length;
+        int length = input.Length;
         
         var count = new int[256];
-        foreach (char c in s)
+        var sum = new int[256];
+        var next = new int[length];
+        
+        foreach (char b in input)
         {
-            count[c]++;
+            count[b]++;
         }
         
-        int[] position = new int[256];
-        int total = 0;
         for (int i = 0; i < 256; i++)
         {
-            total += count[i];
-            position[i] = total - count[i];
+            sum[i] = sum[i - 1] - count[i - 1];
         }
         
-        var firstColumn = new char[length];
-        var t = new int[length];
         for (int i = 0; i < length; i++)
         {
-            char c = s[i];
-            firstColumn[position[c]] = c;
-            t[position[c]] = i;
-            position[c]++;
+            byte b = input[i];
+            next[sum[b]] = i;
+            sum[b]++;
         }
         
-        StringBuilder result = new StringBuilder(length);
-        int j = k;
+        var result = new byte[length];
+        int current = position;
         for (int i = 0; i < length; i++)
         {
-            result.Append(firstColumn[j]);
-            j = t[j];
+            result[i] = input[current];
+            current = next[current];
         }
     
-        return result.ToString();
+        return result;
     }
 }
