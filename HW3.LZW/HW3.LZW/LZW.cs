@@ -4,49 +4,67 @@ public static class LZW
 {
     public static void CompressFile(string inputFile, string outputFile)
     {
-        byte[] input = File.ReadAllBytes(inputFile);
-        var (bvtOutput, bwtPosition) = BWT.Direct(input);
-        var compressed = Compress(bvtOutput);
-
+        using (var reader = new BinaryReader(File.Open(inputFile, FileMode.Open)))
         using (var writer = new BinaryWriter(File.Open(outputFile, FileMode.Create)))
         {
-            writer.Write(bwtPosition);
-            foreach (int code in compressed)
+            var trie = new Trie();
+            var compressed = new List<ushort>();
+            long trieSize = 256; 
+            const long maxTrieSize = 65536;
+            
+            byte[] buffer = new byte[8192]; // по 8КБ
+            int bytesRead;
+
+            while ((bytesRead = reader.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                var compressedData = Compress(buffer.Take(bytesRead).ToArray(), ref trie, ref trieSize, maxTrieSize);
+                compressed.AddRange(compressedData.Select(b => (ushort)b));
+            }
+
+            writer.Write((int)compressed.Count);
+            foreach (ushort code in compressed)
             {
                 writer.Write(code);
             }
-        }
+        }        
+           
     }
-    private static List<int> Compress(byte[] input)
+    private static List<int> Compress(byte[] input, ref Trie trie, ref long trieSize, long maxTrieSize)
     {
-        var trie = new Trie();
         var output = new List<int>();
         int start = 0;
 
         while (start < input.Length)
         {
             int end = start + 1;
-            while (end <= input.Length && trie.TryGetCode(input[start..end], out _))
+            while (end <= input.Length && trie.TryGetCode(input.AsSpan(start, end - start).ToArray(), out _))
             {
                 end++;
             }
 
             if (end > start + 1)
             {
-                trie.TryGetCode(input[start..(end - 1)], out int code);
+                trie.TryGetCode(input.AsSpan(start, end - start - 1).ToArray(), out int code);
                 output.Add(code);
             }
             else
             {
-                trie.TryGetCode(input[start..end], out int code);
+                trie.TryGetCode(input.AsSpan(start, end - start).ToArray(), out int code);
                 output.Add(code);
             }
 
             if (end <= input.Length)
             {
-                trie.Add(input[start..end]);
+                trie.Add(input.AsSpan(start, end - start).ToArray());
+                trieSize += (end - start);
             }
 
+            if (trieSize >= maxTrieSize)
+            {
+                trie = new Trie();
+                trieSize = 256;
+                output.Add(256); //значек сброса
+            }
             start = end - 1;
         }
         
@@ -55,16 +73,17 @@ public static class LZW
 
     public static void DecompressFile(string inputFile, string outputFile)
     {
-        using (var reader = new BinaryReader(File.Open(outputFile, FileMode.Open)))
+        using (var reader = new BinaryReader(File.Open(inputFile, FileMode.Open)))
         {
-            int bwtPosition = reader.ReadInt32();
+            int count = reader.ReadInt32();
+            
             var compressed = new List<int>();
-            while (reader.BaseStream.Position < reader.BaseStream.Length)
+            for (int i = 0; i < count; i++)
             {
-                compressed.Add(reader.ReadInt32());
+                compressed.Add(reader.ReadInt16());
             }
-            byte[] bwtOutput = LZW.Decompress(compressed);
-            byte[] original = BWT.Reverse(bwtOutput, bwtPosition);
+            
+            byte[] original = Decompress(compressed);
             File.WriteAllBytes(outputFile, original);
         }
     }
@@ -79,27 +98,50 @@ public static class LZW
         byte[] current = dictionary[compressed[0]];
         var output = new List<byte>(current);
         int nextCode = 256;
-        
+
         for (int i = 1; i < compressed.Count; i++)
         {
             int code = compressed[i];
-            byte[] entry; //хз как подругому
-            
+            if (code == 256)
+            {
+                dictionary.Clear();
+                for (int j = 0; j < 256; j++)
+                {
+                    dictionary[j] = new byte[] { (byte)j };
+                }
+
+                nextCode = 256;
+                current = dictionary[compressed[++i]];
+                output.AddRange(current);
+                continue;
+            }
+
+            byte[] entry;
+
             if (dictionary.ContainsKey(code))
             {
                 entry = dictionary[code];
             }
             else if (code == nextCode)
             {
-                entry = current.Concat(new byte[] { current[0] }).ToArray();
+                entry = new byte[current.Length + 1];
+                Array.Copy(current, entry, current.Length);
+                entry[current.Length] = current[0];
             }
             else
             {
-                throw new Exception("Invalid code lololololol");
+                throw new Exception("Invalid code");
             }
 
             output.AddRange(entry);
-            dictionary[nextCode++] = current.Concat(new byte[] { entry[0] }).ToArray();
+
+            if (nextCode < 4096)
+            {
+                byte[] newEntry = new byte[current.Length + 1];
+                Array.Copy(current, newEntry, current.Length);
+                newEntry[current.Length] = entry[0];
+                dictionary[nextCode++] = newEntry;
+            }
             current = entry;
         }
         return output.ToArray();
