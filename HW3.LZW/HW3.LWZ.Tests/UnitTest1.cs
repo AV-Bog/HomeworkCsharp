@@ -47,6 +47,38 @@ namespace HW3.LZW.Tests
         }
 
         [Test]
+        public void TestCompressAndDecompress_RepeatedCharacters()
+        {
+            // Arrange
+            string originalText = new string('a', 1000); // Строка из 1000 символов 'a'
+            File.WriteAllText(_testFilePath, originalText);
+
+            // Act
+            LZW.CompressFile(_testFilePath, _compressedFilePath); // Сжимаем файл
+            LZW.DecompressFile(_compressedFilePath, _decompressedFilePath); // Распаковываем файл
+
+            // Assert
+            string decompressedText = File.ReadAllText(_decompressedFilePath);
+            Assert.AreEqual(originalText, decompressedText); // Проверяем, что данные совпадают
+        }
+
+        [Test]
+        public void TestCompressAndDecompress_LargeFile()
+        {
+            // Arrange
+            string originalText = new string('x', 100000); // Строка из 100000 символов 'x'
+            File.WriteAllText(_testFilePath, originalText);
+
+            // Act
+            LZW.CompressFile(_testFilePath, _compressedFilePath); // Сжимаем файл
+            LZW.DecompressFile(_compressedFilePath, _decompressedFilePath); // Распаковываем файл
+
+            // Assert
+            string decompressedText = File.ReadAllText(_decompressedFilePath);
+            Assert.AreEqual(originalText, decompressedText); // Проверяем, что данные совпадают
+        }
+        
+        [Test]
         public void TestCompressAndDecompress_EmptyFile()
         {
             // Arrange
