@@ -36,7 +36,7 @@ public class Trie
     /// </summary>
     /// <param name="key"></param>
     /// <returns>True if such a word is contained in the tree.</returns>
-    public bool TryGetCode(byte[] key, out int code)
+    public bool TryGetCode(byte[] key, out ushort code)
     {
         return _root.TryGetCode(key, out code);
     }

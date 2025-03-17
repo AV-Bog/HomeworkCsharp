@@ -29,21 +29,21 @@ public class Node (byte symbol)
         }
     }
     
-    public bool TryGetCode(byte[] key, out int code)
+    public bool TryGetCode(byte[] key, out ushort code)
     {
         if (key.Length == 0)
         {
-            code = Code;
+            code = (ushort)Code;
             return Code != -1;
         }
-        
+
         var subnode = TryFind(key[0]);
         if (subnode == null)
         {
-            code = -1;
+            code = 0;
             return false;
         }
-        
+
         return subnode.TryGetCode(key[1..], out code);
     }
 }

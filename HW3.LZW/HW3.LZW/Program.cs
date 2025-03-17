@@ -17,14 +17,14 @@ string userInput = Console.ReadLine();
 if (userInput == "-c")
 {
     string outputFilePath = GenerateOutputFilePath(filePath, 1);
-    Console.WriteLine("Файл сжимается... Просим вам подождать");
+    Console.WriteLine("Файл сжимается... Просим вас подождать");
     LZW.CompressFile(filePath, outputFilePath);
     Console.WriteLine("Файл сжался с коэффицентом сжатия = {0}", CCR.CalculateCompressionRatio(filePath, outputFilePath));
 }
 if (userInput == "-u")
 {
     string outputFilePath = GenerateOutputFilePath(filePath, 0);
-    LZW.CompressFile(filePath, outputFilePath);
+    LZW.DecompressFile(filePath, outputFilePath);
 }
 
 void RunReserchBWT()
