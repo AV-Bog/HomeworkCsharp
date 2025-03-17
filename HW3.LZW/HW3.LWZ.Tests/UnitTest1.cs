@@ -50,32 +50,32 @@ namespace HW3.LZW.Tests
         public void TestCompressAndDecompress_RepeatedCharacters()
         {
             // Arrange
-            string originalText = new string('a', 1000); // Строка из 1000 символов 'a'
+            string originalText = new string('a', 1000);
             File.WriteAllText(_testFilePath, originalText);
 
             // Act
-            LZW.CompressFile(_testFilePath, _compressedFilePath); // Сжимаем файл
-            LZW.DecompressFile(_compressedFilePath, _decompressedFilePath); // Распаковываем файл
+            LZW.CompressFile(_testFilePath, _compressedFilePath);
+            LZW.DecompressFile(_compressedFilePath, _decompressedFilePath);
 
             // Assert
             string decompressedText = File.ReadAllText(_decompressedFilePath);
-            Assert.AreEqual(originalText, decompressedText); // Проверяем, что данные совпадают
+            Assert.AreEqual(originalText, decompressedText);
         }
 
         [Test]
         public void TestCompressAndDecompress_LargeFile()
         {
             // Arrange
-            string originalText = new string('x', 100000); // Строка из 100000 символов 'x'
+            string originalText = new string('x', 100000);
             File.WriteAllText(_testFilePath, originalText);
 
             // Act
-            LZW.CompressFile(_testFilePath, _compressedFilePath); // Сжимаем файл
-            LZW.DecompressFile(_compressedFilePath, _decompressedFilePath); // Распаковываем файл
+            LZW.CompressFile(_testFilePath, _compressedFilePath);
+            LZW.DecompressFile(_compressedFilePath, _decompressedFilePath);
 
             // Assert
             string decompressedText = File.ReadAllText(_decompressedFilePath);
-            Assert.AreEqual(originalText, decompressedText); // Проверяем, что данные совпадают
+            Assert.AreEqual(originalText, decompressedText);
         }
         
         [Test]
@@ -90,7 +90,7 @@ namespace HW3.LZW.Tests
 
             // Assert
             string decompressedText = File.ReadAllText(_decompressedFilePath);
-            Assert.AreEqual(string.Empty, decompressedText); // Проверяем, файл пуст
+            Assert.AreEqual(string.Empty, decompressedText);
         }
 
         [Test]

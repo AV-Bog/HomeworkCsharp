@@ -1,6 +1,8 @@
-﻿using System.Text;
+﻿using System;
 using System.IO;
 using HW3.LZW;
+
+/*RunReserchBWT(); посмотрите что там не так (т.к. файл большой, в оперативку не пишу, но все равно долговато. просто я уже запуталась)*/
 
 Console.Write("Введите путь к файлу, который надо сжать или разжать: ");
 string filePath = Console.ReadLine();
@@ -23,6 +25,19 @@ if (userInput == "-u")
 {
     string outputFilePath = GenerateOutputFilePath(filePath, 0);
     LZW.CompressFile(filePath, outputFilePath);
+}
+
+void RunReserchBWT()
+{
+    string testBwtFile = @"C:\Users\ASUS\RiderProjects\Homeworks\Новая папка\HW2.Trie.exe";
+    if (!File.Exists(testBwtFile))
+    {
+        Console.WriteLine("Файл длля исследования БВТ не найден. Проверьте путь.");
+        return;
+    }
+
+    string result = BWT.Research(testBwtFile);
+    Console.WriteLine(result);
 }
 
 string GenerateOutputFilePath(string filePath, int key)

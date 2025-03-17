@@ -19,6 +19,7 @@ public static class LZW
             {
                 writer.Write(code);
             }
+            
         }      
            
     }
