@@ -8,10 +8,7 @@ public class Set
     public Set(Edge edge)
     {
         SetGraph = new Graph(edge);
-        
-        Vertices = new List<int>();
-        Vertices.Add(edge.VertexA);
-        Vertices.Add(edge.VertexB);
+        Vertices = new List<int>() { edge.VertexA, edge.VertexB };
     }
 
     public bool Contains(int vertex)

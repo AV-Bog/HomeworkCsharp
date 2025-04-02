@@ -15,21 +15,6 @@ public class Edge : IComparable<Edge>
 
     public int CompareTo(Edge? other)
     {
-        if (other == null)
-        {
-            return 1;
-        }
-        return EdgeWeight.CompareTo(other.EdgeWeight);
+        return other == null ? 1 : EdgeWeight.CompareTo(other.EdgeWeight);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
