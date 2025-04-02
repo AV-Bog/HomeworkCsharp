@@ -2,12 +2,12 @@ namespace HW4.Routers;
 
 public class KruskalAlgorithm
 {
-    public static Graph FindMinimumSpanningTree(Graph graph)
+    public static Graph FindMaximumSpanningTree(Graph graph)
     {
         Graph minimumSpanningTree = new Graph();
     
         List<Edge> edges = new List<Edge>(graph);
-        edges.Sort();
+        edges.Sort((a, b) => b.EdgeWeight.CompareTo(a.EdgeWeight));
         
         List<Set> sets = new List<Set>();
         foreach (Edge edge in edges)

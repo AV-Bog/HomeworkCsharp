@@ -13,7 +13,7 @@ if (args.Length != 2)
 try
 {
     Graph graph = ReadGraphFromFile(args[0]);
-    Graph mst = KruskalAlgorithm.FindMinimumSpanningTree(graph);
+    Graph mst = KruskalAlgorithm.FindMaximumSpanningTree(graph);
 
     if (!Graph.IsGraphConnected(mst))
     {
