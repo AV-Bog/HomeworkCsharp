@@ -16,7 +16,7 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           set -euo pipefail
-          find src tests -name "*.sln" | while read solution; do
+          find . -name "*.sln" | while read solution; do
             dotnet build "$solution"
           done
 
