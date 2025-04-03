@@ -1,5 +1,6 @@
 name: Build
 on: [push, pull_request]
+
 jobs:
   build:
     strategy:
@@ -12,21 +13,25 @@ jobs:
         with:
           dotnet-version: '9.x'
 
-      - name: Build
-        if: runner.os != 'Windows'
+      - name: Find solutions
+        id: find-solutions
         run: |
-          set -euo pipefail
-          find . -name "*.sln" | while read solution; do
-            dotnet build "$solution"
-          done
+          SOLUTIONS=$(find . -name "*.sln" | tr '\n' ' ')
+          echo "solutions=${SOLUTIONS}" >> $GITHUB_OUTPUT
+          echo "Found solutions: ${SOLUTIONS}"
 
       - name: Build
-        if: runner.os == 'Windows'
-        shell: cmd
         run: |
-          For /R src %%I in (*.sln) do dotnet build "%%I"
-          For /R tests %%I in (*.sln) do dotnet build "%%I"
+          set -euo pipefail
+          for solution in ${{ steps.find-solutions.outputs.solutions }}; do
+            echo "Building $solution"
+            dotnet build "$solution" --configuration Release
+          done
 
       - name: Run tests
         run: |
-          dotnet test --no-build --verbosity normal
+          set -euo pipefail
+          for solution in ${{ steps.find-solutions.outputs.solutions }}; do
+            echo "Testing projects in $solution"
+            dotnet test "$solution" --configuration Release --no-build --verbosity normal
+          done
