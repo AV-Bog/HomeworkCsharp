@@ -1,0 +1,33 @@
+name: Build
+on: [push, pull_request]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.x'
+
+      - name: Build
+        if: runner.os != 'Windows'
+        run: |
+          set -euo pipefail
+          find src tests -name "*.sln" | while read solution; do
+            dotnet build "$solution"
+          done
+
+      - name: Build
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: |
+          For /R src %%I in (*.sln) do dotnet build "%%I"
+          For /R tests %%I in (*.sln) do dotnet build "%%I"
+
+      - name: Run tests
+        run: |
+          dotnet test --no-build --verbosity normal
