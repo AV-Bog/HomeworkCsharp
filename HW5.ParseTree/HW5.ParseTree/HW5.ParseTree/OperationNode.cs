@@ -2,8 +2,8 @@ namespace HW5.ParseTree;
 
 public abstract class OperationNode : Node
 {
-    protected readonly Node _left;
-    protected readonly Node _right;
+    public readonly Node _left;
+    public readonly Node _right;
     
     protected OperationNode(Node left, Node right)
     {
