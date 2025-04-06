@@ -5,42 +5,65 @@ public class CalculatorEngine
     private int _currentValue;
     private int _previousValue;
     private string _currentOperator;
-    private bool _isOperatorClicked;
+    private bool _isNewNumber;
+    private bool _hasStoredValue;
+    
+    public int CurrentValue => _currentValue;
 
     public void NumberProses(int digit)
     {
-        if (_isOperatorClicked)
+        if (_isNewNumber)
         {
+            _previousValue = _currentValue;
             _currentValue = digit;
-            _isOperatorClicked = false;
+            _isNewNumber = false;
+            _hasStoredValue = true;
         }
         else
         {
             _currentValue = _currentValue * 10 + digit;
         }
     }
+    
     public void OperatorProses(char curOperator)
     {
-        if (!String.IsNullOrEmpty(_currentOperator))
+        if (_hasStoredValue && !_isNewNumber)
         {
             Calculate();
         }
-
-        _previousValue = _currentValue;
         _currentOperator = curOperator.ToString();
-        _isOperatorClicked = true;
+        _isNewNumber = true;
     }
 
     public int Calculate()
     {
-        switch (_currentOperator)
+        if (_hasStoredValue && !string.IsNullOrEmpty(_currentOperator))
         {
-            case "+": _currentValue = _currentValue + _previousValue; break;
-            case "-": _currentValue =  _currentValue - _previousValue; break;
-            case "*": _currentValue = _currentValue * _previousValue; break;
-            case "/": _currentValue = _currentValue / _previousValue; break;
+            switch (_currentOperator)
+            {
+                case "+":
+                    _currentValue = _previousValue + _currentValue;
+                    break;
+                case "-":
+                    _currentValue = _previousValue - _currentValue;
+                    break;
+                case "*":
+                    _currentValue = _previousValue * _currentValue;
+                    break;
+                case "/":
+                    if (_currentValue == 0)
+                    {
+                        throw new DivideByZeroException("Дурак?");
+                    }
+                    _currentValue = _previousValue / _currentValue;
+                    break;
+            }
+            _previousValue = _currentValue;
         }
+        
         _currentOperator = "";
+        _isNewNumber = true;
+        _hasStoredValue = true;
         return _currentValue;
     }
     
@@ -49,6 +72,7 @@ public class CalculatorEngine
         _currentValue = 0;
         _previousValue = 0;
         _currentOperator = "";
-        _isOperatorClicked = false;
+        _isNewNumber = false;
+        _hasStoredValue = false;
     }
 }
