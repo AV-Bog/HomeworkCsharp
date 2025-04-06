@@ -1,3 +1,5 @@
+using System.Diagnostics.Eventing.Reader;
+
 namespace HW7.Calculator;
 
 public class CalculatorEngine
@@ -9,10 +11,34 @@ public class CalculatorEngine
     private bool _hasStoredValue;
     private bool _hasDot;
     private int _decimalPlaces;
-    
+
     public double CurrentValue => _currentValue;
 
-    public void NumberProses(double digit)
+    public void EventHandler(string input)
+    {
+        switch (input)
+        {
+            case "C": Clear(); break;
+            case "=": Calculate(); break;
+            case "+" or "-" or "/" or "*": OperatorProses(input); break; 
+            case ".": AddDot(); break;
+            default:
+            {
+                if (input.Length == 1 && char.IsDigit(input[0]))
+                {
+                    int digit = int.Parse(input);
+                    NumberProses(digit);
+                }
+                else
+                {
+                    throw new ArgumentException($"Недопустимый ввод: '{input}'. Ожидалась цифра 0-9, точка или операция");
+                }
+                break;
+            }
+        }
+    }
+    
+    private void NumberProses(int digit)
     {
         if (_isNewNumber)
         {
@@ -38,17 +64,17 @@ public class CalculatorEngine
         }
     }
     
-    public void OperatorProses(char curOperator)
+   private void OperatorProses(string curOperator)
     {
         if (_hasStoredValue && !_isNewNumber)
         {
             Calculate();
         }
-        _currentOperator = curOperator.ToString();
+        _currentOperator = curOperator;
         _isNewNumber = true;
     }
 
-    public double Calculate()
+    private void Calculate()
     {
         if (_hasStoredValue && !string.IsNullOrEmpty(_currentOperator))
         {
@@ -77,10 +103,9 @@ public class CalculatorEngine
         _currentOperator = "";
         _isNewNumber = true;
         _hasStoredValue = true;
-        return _currentValue;
     }
 
-    public void AddDot()
+    private void AddDot()
     {
         if (_hasDot)
         {
@@ -90,7 +115,7 @@ public class CalculatorEngine
         _decimalPlaces = 0;
     }
     
-    public void Clear()
+    private void Clear()
     {
         _currentValue = 0;
         _previousValue = 0;

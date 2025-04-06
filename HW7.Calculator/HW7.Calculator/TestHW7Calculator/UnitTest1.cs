@@ -11,14 +11,14 @@ public class TestsCalculatorEngine
     public void Setup()
     {
         calculator = new CalculatorEngine();
-        calculator.Clear();
+        calculator.EventHandler("C");
     }
 
     [Test]
     public void CheckingDigitsCombination()
     {
-        calculator.NumberProses(1);
-        calculator.NumberProses(1);
+        calculator.EventHandler("1");
+        calculator.EventHandler("1");
         if (calculator.CurrentValue != 11)
         {
             throw new AssertionException($"Expected 11, but got {calculator.CurrentValue}");
@@ -28,10 +28,11 @@ public class TestsCalculatorEngine
     [Test]
     public void CheckAdditionNumbersLessThan10()
     {
-        calculator.NumberProses(7);
-        calculator.OperatorProses('+');
-        calculator.NumberProses(3);
-        if (calculator.Calculate() != 10)
+        calculator.EventHandler("7");
+        calculator.EventHandler("+");
+        calculator.EventHandler("3");
+        calculator.EventHandler("=");
+        if (calculator.CurrentValue != 10)
         {
             throw new AssertionException($"Expected 10, but got {calculator.CurrentValue}");
         }
@@ -40,12 +41,13 @@ public class TestsCalculatorEngine
     [Test]
     public void CheckAdditionNumbersGreaterThan10()
     {
-        calculator.NumberProses(7);
-        calculator.NumberProses(7);
-        calculator.OperatorProses('+');
-        calculator.NumberProses(2);
-        calculator.NumberProses(3);
-        if (calculator.Calculate() != 100)
+        calculator.EventHandler("7");
+        calculator.EventHandler("7");
+        calculator.EventHandler("+");
+        calculator.EventHandler("2");
+        calculator.EventHandler("3");
+        calculator.EventHandler("=");
+        if (calculator.CurrentValue != 100)
         {
             throw new AssertionException($"Expected 100, but got {calculator.CurrentValue}");
         }
@@ -54,12 +56,13 @@ public class TestsCalculatorEngine
     [Test]
     public void CheckAdditionThenMultiplication()
     {
-        calculator.NumberProses(8);
-        calculator.OperatorProses('+');
-        calculator.NumberProses(2);
-        calculator.OperatorProses('*');
-        calculator.NumberProses(3);
-        if (calculator.Calculate() != 30)
+        calculator.EventHandler("8");
+        calculator.EventHandler("+");
+        calculator.EventHandler("2");
+        calculator.EventHandler("*");
+        calculator.EventHandler("3");
+        calculator.EventHandler("=");
+        if (calculator.CurrentValue != 30)
         {
             throw new AssertionException($"Expected 30, but got {calculator.CurrentValue}");
         }
@@ -68,35 +71,42 @@ public class TestsCalculatorEngine
     [Test]
     public void CheckDivisionBy0()
     {
-        calculator.NumberProses(8);
-        calculator.OperatorProses('/');
-        calculator.NumberProses(0);
-        Assert.Throws<DivideByZeroException>(() => calculator.Calculate());
+        calculator.EventHandler("8");
+        calculator.EventHandler("/");
+        calculator.EventHandler("0");
+        Assert.Throws<DivideByZeroException>(() => calculator.EventHandler("="));
     }
     
     [Test]
     public void CheckTwoPoints()
     {
-        calculator.NumberProses(1);
-        calculator.NumberProses(1);
-        calculator.AddDot();
-        calculator.NumberProses(1);
-        Assert.Throws<InvalidOperationException>(() => calculator.AddDot());
+        calculator.EventHandler("1");
+        calculator.EventHandler("1");
+        calculator.EventHandler(".");
+        calculator.EventHandler("1");
+        Assert.Throws<InvalidOperationException>(() => calculator.EventHandler("."));
     }
     
     [Test]
     public void CheckingNonIntegerCalculations()
     {
-        calculator.NumberProses(1);
-        calculator.NumberProses(1);
-        calculator.AddDot();
-        calculator.NumberProses(1);
-        calculator.NumberProses(1);
-        calculator.OperatorProses('+');
-        calculator.NumberProses(1);
-        if (calculator.Calculate() != 12.11)
+        calculator.EventHandler("1");
+        calculator.EventHandler("1");
+        calculator.EventHandler(".");
+        calculator.EventHandler("1");
+        calculator.EventHandler("1");
+        calculator.EventHandler("+");
+        calculator.EventHandler("1");
+        calculator.EventHandler("=");
+        if (calculator.CurrentValue != 12.11)
         {
             throw new AssertionException($"Expected 12.11, but got {calculator.CurrentValue}");
         }
+    }
+    
+    [Test]
+    public void CheckIncorrectInput()
+    {
+        Assert.Throws<ArgumentException>(() => calculator.EventHandler("a"));
     }
 }
