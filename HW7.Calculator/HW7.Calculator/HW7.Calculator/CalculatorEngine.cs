@@ -2,15 +2,17 @@ namespace HW7.Calculator;
 
 public class CalculatorEngine
 {
-    private int _currentValue;
-    private int _previousValue;
+    private double _currentValue;
+    private double _previousValue;
     private string _currentOperator;
     private bool _isNewNumber;
     private bool _hasStoredValue;
+    private bool _hasDot;
+    private int _decimalPlaces;
     
-    public int CurrentValue => _currentValue;
+    public double CurrentValue => _currentValue;
 
-    public void NumberProses(int digit)
+    public void NumberProses(double digit)
     {
         if (_isNewNumber)
         {
@@ -18,10 +20,21 @@ public class CalculatorEngine
             _currentValue = digit;
             _isNewNumber = false;
             _hasStoredValue = true;
+            _hasDot = false;
+            _decimalPlaces = 0;
         }
         else
         {
-            _currentValue = _currentValue * 10 + digit;
+            if (_hasDot)
+            {
+                _currentValue+= digit / Math.Pow(10, _decimalPlaces + 1);
+                _decimalPlaces++;
+            }
+            else
+            {
+                _currentValue = _currentValue * 10 + digit;
+            }
+            
         }
     }
     
@@ -35,7 +48,7 @@ public class CalculatorEngine
         _isNewNumber = true;
     }
 
-    public int Calculate()
+    public double Calculate()
     {
         if (_hasStoredValue && !string.IsNullOrEmpty(_currentOperator))
         {
@@ -66,6 +79,16 @@ public class CalculatorEngine
         _hasStoredValue = true;
         return _currentValue;
     }
+
+    public void AddDot()
+    {
+        if (_hasDot)
+        {
+            throw new InvalidOperationException("2 точки? Серьезно?");
+        }
+        _hasDot = true;
+        _decimalPlaces = 0;
+    }
     
     public void Clear()
     {
@@ -74,5 +97,7 @@ public class CalculatorEngine
         _currentOperator = "";
         _isNewNumber = false;
         _hasStoredValue = false;
+        _hasDot = false;
+        _decimalPlaces = 0;
     }
 }

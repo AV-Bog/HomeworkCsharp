@@ -15,7 +15,7 @@ public class TestsCalculatorEngine
     }
 
     [Test]
-    public void Test1()
+    public void CheckingDigitsCombination()
     {
         calculator.NumberProses(1);
         calculator.NumberProses(1);
@@ -26,7 +26,7 @@ public class TestsCalculatorEngine
     }
 
     [Test]
-    public void Test2()
+    public void CheckAdditionNumbersLessThan10()
     {
         calculator.NumberProses(7);
         calculator.OperatorProses('+');
@@ -38,7 +38,7 @@ public class TestsCalculatorEngine
     }
     
     [Test]
-    public void Test3()
+    public void CheckAdditionNumbersGreaterThan10()
     {
         calculator.NumberProses(7);
         calculator.NumberProses(7);
@@ -52,7 +52,7 @@ public class TestsCalculatorEngine
     }
     
     [Test]
-    public void Test4()
+    public void CheckAdditionThenMultiplication()
     {
         calculator.NumberProses(8);
         calculator.OperatorProses('+');
@@ -66,11 +66,37 @@ public class TestsCalculatorEngine
     }
     
     [Test]
-    public void Test5()
+    public void CheckDivisionBy0()
     {
         calculator.NumberProses(8);
         calculator.OperatorProses('/');
         calculator.NumberProses(0);
         Assert.Throws<DivideByZeroException>(() => calculator.Calculate());
+    }
+    
+    [Test]
+    public void CheckTwoPoints()
+    {
+        calculator.NumberProses(1);
+        calculator.NumberProses(1);
+        calculator.AddDot();
+        calculator.NumberProses(1);
+        Assert.Throws<InvalidOperationException>(() => calculator.AddDot());
+    }
+    
+    [Test]
+    public void CheckingNonIntegerCalculations()
+    {
+        calculator.NumberProses(1);
+        calculator.NumberProses(1);
+        calculator.AddDot();
+        calculator.NumberProses(1);
+        calculator.NumberProses(1);
+        calculator.OperatorProses('+');
+        calculator.NumberProses(1);
+        if (calculator.Calculate() != 12.11)
+        {
+            throw new AssertionException($"Expected 12.11, but got {calculator.CurrentValue}");
+        }
     }
 }
