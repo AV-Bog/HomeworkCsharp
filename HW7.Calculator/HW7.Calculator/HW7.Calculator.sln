@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW7.Calculator", "HW7.Calculator\HW7.Calculator.csproj", "{29956FB8-3157-4CDE-B79C-3A666641227E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHW7Calculator", "TestHW7Calculator\TestHW7Calculator.csproj", "{97ABA4E1-2B84-4DD6-A1E7-2519DB45F175}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{29956FB8-3157-4CDE-B79C-3A666641227E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29956FB8-3157-4CDE-B79C-3A666641227E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29956FB8-3157-4CDE-B79C-3A666641227E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97ABA4E1-2B84-4DD6-A1E7-2519DB45F175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97ABA4E1-2B84-4DD6-A1E7-2519DB45F175}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97ABA4E1-2B84-4DD6-A1E7-2519DB45F175}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97ABA4E1-2B84-4DD6-A1E7-2519DB45F175}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
