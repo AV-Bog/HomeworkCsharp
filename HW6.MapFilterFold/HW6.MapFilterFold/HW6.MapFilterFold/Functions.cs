@@ -2,6 +2,10 @@ namespace HW6.MapFilterFold;
 
 public class Functions
 {
+    /// <summary>
+    /// Transforms each list element using the provided mapper function
+    /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when list or mapper is null</exception>
     public static List<TResult> Map<TInput, TResult>(
         List<TInput> list,
         Func<TInput, TResult> mapper)
@@ -19,6 +23,10 @@ public class Functions
         return result;
     }
 
+    /// <summary>
+    /// Filters elements based on the provided predicate
+    /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when list or filter is null</exception>
     public static List<TInput> Filter<TInput>(
         List<TInput> list,
         Func<TInput, bool> filter)
@@ -39,6 +47,10 @@ public class Functions
         return result;
     }
 
+    /// <summary>
+    /// Reduces the list to a single value using initial element and accumulator function
+    /// </summary>
+    /// <exception cref="ArgumentNullException">Thrown when list or func is null</exception>
     public static TAcc Fold<TInput, TAcc>(
         List<TInput> list, 
         TAcc element, 
