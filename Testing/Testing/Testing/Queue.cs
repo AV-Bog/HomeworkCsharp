@@ -6,15 +6,15 @@ using System.Runtime.InteropServices;
 
 namespace Testing;
 
-public class Queue
+public class Queue<T>
 {
     private struct QueueItem
     {
-        public int Value { get; }
+        public T Value { get; }
         public int Priority { get; }
         public long Timestamp { get; }
 
-        public QueueItem(int value, int priority, long timestamp)
+        public QueueItem(T value, int priority, long timestamp)
         {
             Value = value;
             Priority = priority;
@@ -35,7 +35,7 @@ public class Queue
         timestampCounter = 0;
     }
     
-    public void Enqueue(int value, int priority)
+    public void Enqueue(T value, int priority)
     {
         if (count == heap.Length) //чтоб было куда добавлять
         {
@@ -68,7 +68,7 @@ public class Queue
         heap[j] = temp;
     }
 
-    public int Dequeue()
+    public T Dequeue()
     {
         if (count == 0)
         {
@@ -101,7 +101,7 @@ public class Queue
                 largest = left;
             }
 
-            if (right < count && Compare(heap[left], heap[largest]) > 0)
+            if (right < count && Compare(heap[right], heap[largest]) > 0)
             {
                 largest = right;
             }
@@ -117,12 +117,12 @@ public class Queue
 
     private int Compare(QueueItem item1, QueueItem item2)
     {
-        int priorityCompare = item1.Priority.CompareTo(item2.Priority);
+        int priorityCompare = item2.Priority.CompareTo(item1.Priority);
         if (priorityCompare != 0)
         {
             return priorityCompare;
         }
-        return -item1.Timestamp.CompareTo(item2.Timestamp);
+        return item1.Timestamp.CompareTo(item2.Timestamp);
     }
     
     private void Resize(int newSize)
