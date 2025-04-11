@@ -8,52 +8,64 @@ namespace Testing;
 
 public class Queue
 {
-    private int[] a;
-    private int count;
+    private struct QueueItem
+    {
+        public int Value { get; }
+        public int Priority { get; }
+        public long Timestamp { get; }
 
+        public QueueItem(int value, int priority, long timestamp)
+        {
+            Value = value;
+            Priority = priority;
+            Timestamp = timestamp;
+        }
+    }
+
+    private QueueItem[] heap;
+    private int count;
+    private long timestampCounter;
+    
+    public bool Empty => count == 0;
+    
     public Queue(int initialCapacity = 4) //если предается размер очереди или ничего не передается 
     {
-        a = new int[initialCapacity];
+        heap = new QueueItem[initialCapacity];
         count = 0;
-    }
-
-    public Queue(int[] values) //если сразу список закидываем
-    {
-        a = new int[values.Length];
-        Array.Copy(values, a, values.Length);
-        count = values.Length;
-
-        for (int i = count - 1; i >= 0; i--)
-        {
-            Down(i);
-        }
+        timestampCounter = 0;
     }
     
-    public void Enqueue(int value)
+    public void Enqueue(int value, int priority)
     {
-        if (count == a.Length) //чтоб было куда добавлять
+        if (count == heap.Length) //чтоб было куда добавлять
         {
-            Resize(a.Length * 2);
+            Resize(heap.Length * 2);
         }
-        a[count] = value;
+        var item = new QueueItem(value, priority, timestampCounter++);
+        heap[count] = item;
         Up(count);
         count++;
     }
 
     private void Up(int i)
     {
-        while (i != 0 && a[i] > a[(i - 1) / 2])
+        while (i != 0 )
         {
-            Swap(a[i], a[(i - 1) / 2]);
-            i = (i - 1) / 2;
+            int parent = (i - 1) / 2;
+            if (Compare(heap[i], heap[parent]) <= 0)
+            {
+                break;
+            }
+            Swap(i, parent);
+            i = parent;
         }
     }
 
     private void Swap(int i, int j)
     {
-        int temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
+        var temp = heap[i];
+        heap[i] = heap[j];
+        heap[j] = temp;
     }
 
     public int Dequeue()
@@ -63,10 +75,16 @@ public class Queue
             throw new InvalidOperationException("Queue is empty");
         }
         
-        int value = a[0];
-        a[0] = a[count - 1];
+        var value = heap[0].Value;
+        heap[0] = heap[count - 1];
         count--;
         Down(0);
+
+        if (count < heap.Length / 4 && heap.Length > 4)
+        {
+            Resize(heap.Length / 2);
+        }
+        
         return value;
     }
 
@@ -74,25 +92,43 @@ public class Queue
     {
         while (2 * i + 1 < count)
         {
-            int maxChild = 2 * i + 1;
-            if (maxChild + 1 < count && a[maxChild] < a[maxChild + 1])
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+            int largest = i;
+            
+            if (left < count && Compare(heap[left], heap[largest]) > 0)
             {
-                maxChild++;
+                largest = left;
             }
 
-            if (a[i] >= a[maxChild])
+            if (right < count && Compare(heap[left], heap[largest]) > 0)
+            {
+                largest = right;
+            }
+
+            if (largest == i)
             {
                 break;
             }
-            Swap(i, maxChild);
-            i = maxChild;
+            Swap(i, largest);
+            i = largest;
         }
     }
 
+    private int Compare(QueueItem item1, QueueItem item2)
+    {
+        int priorityCompare = item1.Priority.CompareTo(item2.Priority);
+        if (priorityCompare != 0)
+        {
+            return priorityCompare;
+        }
+        return -item1.Timestamp.CompareTo(item2.Timestamp);
+    }
+    
     private void Resize(int newSize)
     {
-        int[] newArray = new int[newSize];
-        Array.Copy(a, newArray, count);
-        a = newArray;
+        var newArray = new QueueItem[newSize];
+        Array.Copy(heap, newArray, count);
+        heap = newArray;
     }
 }
