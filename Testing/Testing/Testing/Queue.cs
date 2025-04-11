@@ -160,7 +160,7 @@ public class Queue<T>
         {
             return priorityCompare;
         }
-        return item1.Timestamp.CompareTo(item2.Timestamp);
+        return item2.Timestamp.CompareTo(item1.Timestamp);
     }
     
     private void Resize(int newSize)
