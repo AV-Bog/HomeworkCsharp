@@ -30,6 +30,11 @@ public class Queue<T>
     
     public Queue(int initialCapacity = 4) //если предается размер очереди или ничего не передается 
     {
+        if (initialCapacity < 1)
+        {
+            throw new ArgumentException("Initial capacity must be at least 1.");
+        }
+        
         heap = new QueueItem[initialCapacity];
         count = 0;
         timestampCounter = 0;
