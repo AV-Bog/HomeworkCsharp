@@ -29,7 +29,6 @@ partial class Form1
     /// </summary>
     private void InitializeComponent()
     {
-        textBox1 = new System.Windows.Forms.TextBox();
         button1 = new System.Windows.Forms.Button();
         button3 = new System.Windows.Forms.Button();
         button2 = new System.Windows.Forms.Button();
@@ -40,51 +39,49 @@ partial class Form1
         button9 = new System.Windows.Forms.Button();
         button7 = new System.Windows.Forms.Button();
         button10 = new System.Windows.Forms.Button();
-        button11 = new System.Windows.Forms.Button();
         button12 = new System.Windows.Forms.Button();
         button13 = new System.Windows.Forms.Button();
         button14 = new System.Windows.Forms.Button();
         button15 = new System.Windows.Forms.Button();
         button16 = new System.Windows.Forms.Button();
         button17 = new System.Windows.Forms.Button();
+        textBox1 = new System.Windows.Forms.TextBox();
         SuspendLayout();
-        // 
-        // textBox1
-        // 
-        textBox1.Location = new System.Drawing.Point(29, 78);
-        textBox1.Name = "textBox1";
-        textBox1.Size = new System.Drawing.Size(237, 31);
-        textBox1.TabIndex = 0;
         // 
         // button1
         // 
+        button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         button1.Location = new System.Drawing.Point(29, 129);
         button1.Name = "button1";
-        button1.Size = new System.Drawing.Size(75, 75);
+        button1.Size = new System.Drawing.Size(75, 76);
         button1.TabIndex = 1;
         button1.Text = "1";
+        button1.UseMnemonic = false;
         button1.UseVisualStyleBackColor = true;
         // 
         // button3
         // 
+        button3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         button3.Location = new System.Drawing.Point(191, 129);
         button3.Name = "button3";
-        button3.Size = new System.Drawing.Size(75, 75);
+        button3.Size = new System.Drawing.Size(75, 76);
         button3.TabIndex = 3;
         button3.Text = "3";
         button3.UseVisualStyleBackColor = true;
         // 
         // button2
         // 
+        button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         button2.Location = new System.Drawing.Point(111, 129);
         button2.Name = "button2";
-        button2.Size = new System.Drawing.Size(75, 75);
+        button2.Size = new System.Drawing.Size(75, 76);
         button2.TabIndex = 2;
         button2.Text = "2";
         button2.UseVisualStyleBackColor = true;
         // 
         // button5
         // 
+        button5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         button5.Location = new System.Drawing.Point(110, 210);
         button5.Name = "button5";
         button5.Size = new System.Drawing.Size(75, 75);
@@ -94,15 +91,17 @@ partial class Form1
         // 
         // button6
         // 
+        button6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         button6.Location = new System.Drawing.Point(191, 210);
         button6.Name = "button6";
-        button6.Size = new System.Drawing.Size(75, 75);
+        button6.Size = new System.Drawing.Size(77, 75);
         button6.TabIndex = 6;
         button6.Text = "6";
         button6.UseVisualStyleBackColor = true;
         // 
         // button4
         // 
+        button4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         button4.Location = new System.Drawing.Point(29, 210);
         button4.Name = "button4";
         button4.Size = new System.Drawing.Size(75, 75);
@@ -112,6 +111,7 @@ partial class Form1
         // 
         // button8
         // 
+        button8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         button8.Location = new System.Drawing.Point(110, 291);
         button8.Name = "button8";
         button8.Size = new System.Drawing.Size(75, 75);
@@ -121,6 +121,7 @@ partial class Form1
         // 
         // button9
         // 
+        button9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         button9.Location = new System.Drawing.Point(191, 291);
         button9.Name = "button9";
         button9.Size = new System.Drawing.Size(75, 75);
@@ -130,6 +131,7 @@ partial class Form1
         // 
         // button7
         // 
+        button7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         button7.Location = new System.Drawing.Point(29, 291);
         button7.Name = "button7";
         button7.Size = new System.Drawing.Size(75, 75);
@@ -139,6 +141,7 @@ partial class Form1
         // 
         // button10
         // 
+        button10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         button10.Location = new System.Drawing.Point(110, 372);
         button10.Name = "button10";
         button10.Size = new System.Drawing.Size(75, 75);
@@ -146,17 +149,9 @@ partial class Form1
         button10.Text = "0";
         button10.UseVisualStyleBackColor = true;
         // 
-        // button11
-        // 
-        button11.Location = new System.Drawing.Point(191, 372);
-        button11.Name = "button11";
-        button11.Size = new System.Drawing.Size(75, 75);
-        button11.TabIndex = 11;
-        button11.Text = "<<";
-        button11.UseVisualStyleBackColor = true;
-        // 
         // button12
         // 
+        button12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         button12.Location = new System.Drawing.Point(29, 372);
         button12.Name = "button12";
         button12.Size = new System.Drawing.Size(75, 75);
@@ -166,12 +161,14 @@ partial class Form1
         // 
         // button13
         // 
-        button13.Location = new System.Drawing.Point(287, 78);
+        button13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
+        button13.BackColor = System.Drawing.Color.LightBlue;
+        button13.Location = new System.Drawing.Point(191, 372);
         button13.Name = "button13";
-        button13.Size = new System.Drawing.Size(75, 31);
+        button13.Size = new System.Drawing.Size(75, 75);
         button13.TabIndex = 13;
         button13.Text = "=";
-        button13.UseVisualStyleBackColor = true;
+        button13.UseVisualStyleBackColor = false;
         // 
         // button14
         // 
@@ -184,6 +181,7 @@ partial class Form1
         // 
         // button15
         // 
+        button15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         button15.Location = new System.Drawing.Point(287, 291);
         button15.Name = "button15";
         button15.Size = new System.Drawing.Size(75, 75);
@@ -193,6 +191,7 @@ partial class Form1
         // 
         // button16
         // 
+        button16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         button16.Location = new System.Drawing.Point(287, 210);
         button16.Name = "button16";
         button16.Size = new System.Drawing.Size(75, 75);
@@ -202,25 +201,36 @@ partial class Form1
         // 
         // button17
         // 
+        button17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         button17.Location = new System.Drawing.Point(287, 129);
         button17.Name = "button17";
-        button17.Size = new System.Drawing.Size(75, 75);
+        button17.Size = new System.Drawing.Size(75, 76);
         button17.TabIndex = 14;
         button17.Text = "+";
         button17.UseVisualStyleBackColor = true;
+        // 
+        // textBox1
+        // 
+        textBox1.Location = new System.Drawing.Point(28, 81);
+        textBox1.MaximumSize = new System.Drawing.Size(333, 31);
+        textBox1.MinimumSize = new System.Drawing.Size(333, 31);
+        textBox1.Name = "textBox1";
+        textBox1.Size = new System.Drawing.Size(333, 31);
+        textBox1.TabIndex = 18;
         // 
         // Form1
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(390, 477);
+        AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        ClientSize = new System.Drawing.Size(391, 481);
+        Controls.Add(textBox1);
         Controls.Add(button14);
         Controls.Add(button15);
         Controls.Add(button16);
         Controls.Add(button17);
         Controls.Add(button13);
         Controls.Add(button10);
-        Controls.Add(button11);
         Controls.Add(button12);
         Controls.Add(button8);
         Controls.Add(button9);
@@ -231,11 +241,14 @@ partial class Form1
         Controls.Add(button2);
         Controls.Add(button3);
         Controls.Add(button1);
-        Controls.Add(textBox1);
+        MinimumSize = new System.Drawing.Size(100, 120);
+        StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
         Text = "Form1";
         ResumeLayout(false);
         PerformLayout();
     }
+
+    private System.Windows.Forms.TextBox textBox1;
 
     private System.Windows.Forms.Button button14;
     private System.Windows.Forms.Button button15;
@@ -243,7 +256,6 @@ partial class Form1
     private System.Windows.Forms.Button button17;
 
     private System.Windows.Forms.Button button10;
-    private System.Windows.Forms.Button button11;
     private System.Windows.Forms.Button button12;
     private System.Windows.Forms.Button button13;
 
@@ -256,7 +268,6 @@ partial class Form1
     private System.Windows.Forms.Button button8;
     private System.Windows.Forms.Button button9;
 
-    private System.Windows.Forms.TextBox textBox1;
     private System.Windows.Forms.Button button1;
 
     #endregion

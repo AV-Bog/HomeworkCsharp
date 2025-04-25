@@ -30,7 +30,6 @@ public partial class Form1 : Form
         
         button13.Click += (s, e) => ProcessInput("=");
         button12.Click += (s, e) => ProcessInput("C");
-        button11.Click += (s, e) => ProcessInput("<<");
     }
 
     private void ProcessInput(string input)
