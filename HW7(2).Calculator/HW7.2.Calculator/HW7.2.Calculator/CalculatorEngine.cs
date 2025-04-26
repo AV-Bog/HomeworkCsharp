@@ -91,7 +91,7 @@ public class CalculatorEngine
                 case "/":
                     if (_currentValue == 0)
                     {
-                        throw new DivideByZeroException("Дурак?");
+                        throw new DivideByZeroException("Деление на 0 не разрешено");
                     }
                     _currentValue = _previousValue / _currentValue;
                     break;
@@ -108,7 +108,7 @@ public class CalculatorEngine
     {
         if (_hasDot)
         {
-            throw new InvalidOperationException("2 точки? Серьезно?");
+            throw new InvalidOperationException("2 точки не могут быть введены");
         }
         _hasDot = true;
         _decimalPlaces = 0;
