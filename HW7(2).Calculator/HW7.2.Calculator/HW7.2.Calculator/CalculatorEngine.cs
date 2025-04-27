@@ -1,5 +1,8 @@
 namespace HW7._2.Calculator;
 
+/// <summary>
+/// Represents the core logic of a calculator engine.
+/// </summary>
 public class CalculatorEngine
 {
     private double _currentValue;
@@ -10,6 +13,9 @@ public class CalculatorEngine
     private bool _hasDot;
     private int _decimalPlaces;
 
+    /// <summary>
+    /// Gets the current output string representation of the calculator state.
+    /// </summary>
     public string Output
     {
         get
@@ -27,7 +33,16 @@ public class CalculatorEngine
         }
     }
     
+    /// <summary>
+    /// Gets the current value stored in the calculator.
+    /// </summary>
     public double CurrentValue => _currentValue;
+    
+    /// <summary>
+    /// Handles input events for the calculator.
+    /// </summary>
+    /// <param name="input">The input string representing a digit, operator, or command.</param>
+    /// <exception cref="ArgumentException">Thrown when the input is invalid.</exception>
     public void EventHandler(string input)
     {
         switch (input)

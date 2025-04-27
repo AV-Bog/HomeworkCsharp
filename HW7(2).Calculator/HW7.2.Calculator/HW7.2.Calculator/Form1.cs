@@ -1,46 +1,52 @@
 namespace HW7._2.Calculator;
 
+/// <summary>
+/// Represents the main form of the calculator application.
+/// </summary>
 public partial class Form1 : Form
 {
-    private CalculatorEngine calculator = new CalculatorEngine();
+    private readonly CalculatorEngine _calculator = new CalculatorEngine();
 
+    /// <summary>
+    /// Initializes a new instance of the calculator form.
+    /// </summary>
     public Form1()
     {
         InitializeComponent();
         InitializeButtonEvents();
 
         this.KeyPreview = true;
-        this.KeyDown += Form1_KeyDown;
+        this.KeyDown += Form1_KeyDown!;
     }
 
     private void InitializeButtonEvents()
     {
-        button1.Click += (s, e) => ProcessInput("1");
-        button2.Click += (s, e) => ProcessInput("2");
-        button3.Click += (s, e) => ProcessInput("3");
-        button4.Click += (s, e) => ProcessInput("4");
-        button5.Click += (s, e) => ProcessInput("5");
-        button6.Click += (s, e) => ProcessInput("6");
-        button7.Click += (s, e) => ProcessInput("7");
-        button8.Click += (s, e) => ProcessInput("8");
-        button9.Click += (s, e) => ProcessInput("9");
-        button10.Click += (s, e) => ProcessInput("0");
+        button1.Click += (_, _) => ProcessInput("1");
+        button2.Click += (_, _) => ProcessInput("2");
+        button3.Click += (_, _) => ProcessInput("3");
+        button4.Click += (_, _) => ProcessInput("4");
+        button5.Click += (_, _) => ProcessInput("5");
+        button6.Click += (_, _) => ProcessInput("6");
+        button7.Click += (_, _) => ProcessInput("7");
+        button8.Click += (_, _) => ProcessInput("8");
+        button9.Click += (_, _) => ProcessInput("9");
+        button10.Click += (_, _) => ProcessInput("0");
 
-        button17.Click += (s, e) => ProcessInput("+");
-        button16.Click += (s, e) => ProcessInput("-");
-        button15.Click += (s, e) => ProcessInput("*");
-        button14.Click += (s, e) => ProcessInput("/");
+        button17.Click += (_, _) => ProcessInput("+");
+        button16.Click += (_, _) => ProcessInput("-");
+        button15.Click += (_, _) => ProcessInput("*");
+        button14.Click += (_, _) => ProcessInput("/");
 
-        button13.Click += (s, e) => ProcessInput("=");
-        button12.Click += (s, e) => ProcessInput("C");
-        button11.Click += (s, e) => ProcessInput(".");
+        button13.Click += (_, _) => ProcessInput("=");
+        button12.Click += (_, _) => ProcessInput("C");
+        button11.Click += (_, _) => ProcessInput(".");
     }
 
     private void ProcessInput(string input)
     {
         try
         {
-            calculator.EventHandler(input);
+            _calculator.EventHandler(input);
             UpdateDisplay();
         }
         catch (Exception ex)
@@ -51,7 +57,7 @@ public partial class Form1 : Form
 
     private void UpdateDisplay()
     {
-        textBox1.Text = calculator.Output;
+        textBox1.Text = _calculator.Output;
     }
 
     private void Form1_KeyDown(object sender, KeyEventArgs e)
