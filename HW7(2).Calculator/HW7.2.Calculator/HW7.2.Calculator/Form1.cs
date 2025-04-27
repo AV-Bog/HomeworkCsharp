@@ -51,7 +51,7 @@ public partial class Form1 : Form
 
     private void UpdateDisplay()
     {
-        textBox1.Text = calculator.CurrentValue.ToString();
+        textBox1.Text = calculator.Output;
     }
 
     private void Form1_KeyDown(object sender, KeyEventArgs e)

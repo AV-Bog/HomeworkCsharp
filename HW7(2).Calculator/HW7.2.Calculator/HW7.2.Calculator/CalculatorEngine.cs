@@ -10,8 +10,24 @@ public class CalculatorEngine
     private bool _hasDot;
     private int _decimalPlaces;
 
+    public string Output
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_currentOperator) && _hasStoredValue)
+                return _currentValue.ToString();
+            
+            if (!string.IsNullOrEmpty(_currentOperator) && _isNewNumber)
+                return $"{_currentValue.ToString()} {_currentOperator}";
+            
+            if (!string.IsNullOrEmpty(_currentOperator))
+                return $"{_previousValue.ToString()} {_currentOperator} {_currentValue.ToString()}";
+            
+            return _currentValue.ToString();
+        }
+    }
+    
     public double CurrentValue => _currentValue;
-
     public void EventHandler(string input)
     {
         switch (input)
