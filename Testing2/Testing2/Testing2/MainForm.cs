@@ -15,17 +15,18 @@ public partial class MainForm : Form
     public MainForm()
     {
         InitializeComponent();
+        button.Image = new Bitmap(button.Image, button.Width, button.Height);
     }
 
-    private void startButton_Click(object sender, EventArgs e)
+    private void button_Click(object sender, EventArgs e)
     {
         this.Close();
     }
-
-    private void startButton_MouseEnter(object sender, EventArgs e)
+    
+    private void button_MouseEnter(object sender, EventArgs e)
     {
         var random = new Random();
-        startButton.Left = random.Next(0, ClientSize.Width - startButton.Width);
-        startButton.Top = random.Next(0, ClientSize.Height - startButton.Height);
+        button.Left = random.Next(0, ClientSize.Width - button.Width);
+        button.Top = random.Next(0, ClientSize.Height - button.Height);
     }
 }
