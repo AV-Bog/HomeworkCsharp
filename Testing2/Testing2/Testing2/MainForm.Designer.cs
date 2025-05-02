@@ -5,7 +5,7 @@
 namespace Testing2;
 
 /// <summary>
-/// Main application form with an interactive button that moves when hovered
+/// Main application form with an interactive escapeButton that moves when hovered
 /// </summary>
 partial class MainForm
 {
@@ -37,24 +37,24 @@ partial class MainForm
     private void InitializeComponent()
     {
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-        button = new System.Windows.Forms.Button();
+        escapeButton = new System.Windows.Forms.Button();
         SuspendLayout();
         // 
-        // button
+        // escapeButton
         // 
-        button.BackColor = System.Drawing.Color.Transparent;
-        button.BackgroundImage = ((System.Drawing.Image)resources.GetObject("button.BackgroundImage"));
-        button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-        button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        button.Image = ((System.Drawing.Image)resources.GetObject("button.Image"));
-        button.Location = new System.Drawing.Point(12, 11);
-        button.Name = "button";
-        button.Size = new System.Drawing.Size(70, 70);
-        button.TabIndex = 0;
-        button.Text = "Tub to my";
-        button.UseVisualStyleBackColor = false;
-        button.Click += button_Click;
-        button.MouseEnter += button_MouseEnter;
+        escapeButton.BackColor = System.Drawing.Color.Transparent;
+        escapeButton.BackgroundImage = ((System.Drawing.Image)resources.GetObject("escapeButton.BackgroundImage"));
+        escapeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+        escapeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        escapeButton.Image = ((System.Drawing.Image)resources.GetObject("escapeButton.Image"));
+        escapeButton.Location = new System.Drawing.Point(12, 11);
+        escapeButton.Name = "escapeButton";
+        escapeButton.Size = new System.Drawing.Size(70, 70);
+        escapeButton.TabIndex = 0;
+        escapeButton.Text = "Tub to my";
+        escapeButton.UseVisualStyleBackColor = false;
+        escapeButton.Click += EscapeButton_Click;
+        escapeButton.MouseEnter += EscapeButton_MouseEnter;
         // 
         // MainForm
         // 
@@ -65,14 +65,14 @@ partial class MainForm
         BackgroundImage = ((System.Drawing.Image)resources.GetObject("$this.BackgroundImage"));
         BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
         ClientSize = new System.Drawing.Size(800, 450);
-        Controls.Add(button);
+        Controls.Add(escapeButton);
         MinimumSize = new System.Drawing.Size(822, 506);
         StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
         Text = "Catch the weed";
         ResumeLayout(false);
     }
 
-    private System.Windows.Forms.Button button;
+    private System.Windows.Forms.Button escapeButton;
 
     #endregion
 }

@@ -5,7 +5,7 @@
 namespace Testing2;
 
 /// <summary>
-/// The main application form with the "escape" button
+/// The main application form with the "escape" escapeButton
 /// </summary>
 public partial class MainForm : Form
 {
@@ -14,19 +14,28 @@ public partial class MainForm : Form
     /// </summary>
     public MainForm()
     {
-        InitializeComponent();
-        button.Image = new Bitmap(button.Image, button.Width, button.Height);
+        this.InitializeComponent();
+        if (this.escapeButton.Image != null)
+        {
+            this.escapeButton.Image = new Bitmap(this.escapeButton.Image, this.escapeButton.Width, this.escapeButton.Height);
+        }
     }
 
-    private void button_Click(object sender, EventArgs e)
+    /// <summary>
+    /// Handles escapeButton click to close the form
+    /// </summary>
+    private void EscapeButton_Click(object sender, EventArgs e)
     {
         this.Close();
     }
     
-    private void button_MouseEnter(object sender, EventArgs e)
+    /// <summary>
+    /// Moves escapeButton to random position when mouse enters
+    /// </summary>
+    private void EscapeButton_MouseEnter(object sender, EventArgs e)
     {
         var random = new Random();
-        button.Left = random.Next(0, ClientSize.Width - button.Width);
-        button.Top = random.Next(0, ClientSize.Height - button.Height);
+        this.escapeButton.Left = random.Next(0, this.ClientSize.Width - this.escapeButton.Width);
+        this.escapeButton.Top = random.Next(0, this.ClientSize.Height - this.escapeButton.Height);
     }
 }
