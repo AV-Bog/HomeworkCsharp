@@ -24,7 +24,8 @@ public class SkipList<T> : IList<T>
     private readonly Random _random = new();
     private int _count = 0;
     private Node _head;
-
+    private int _version = 0;
+    
     public SkipList()
     {
         _head = new Node(default, MaxLevels);
@@ -96,39 +97,145 @@ public class SkipList<T> : IList<T>
 
     public void Clear()
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < _head.Next.Length; i++)
+        {
+            _head.Next[i] = null;
+        }
+        _count = 0;
+        _version++;
     }
 
     public bool Contains(T item)
     {
-        throw new NotImplementedException();
+        if (item == null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
+        
+        var current = _head;
+        for (var i = MaxLevels - 1; i >= 0; i--)
+        {
+            while (current.Next[i] != null && Compare(current.Next[i].Value, item) <= 0)
+            {
+                current = current.Next[i];
+                if (EqualityComparer<T>.Default.Equals(current.Value, item))
+                {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
 
     public void CopyTo(T[] array, int arrayIndex)
     {
-        throw new NotImplementedException();
+        if (array == null)
+        {
+            throw new ArgumentNullException(nameof(array));
+        }
+
+        if (arrayIndex < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(arrayIndex));
+        }
+
+        if (array.Length - arrayIndex < _count)
+        {
+            throw new ArgumentException("В целемом массиве мало мета");
+        }
+        
+        var current = _head.Next[0];
+        while (current != null)
+        {
+            array[arrayIndex++] = current.Value;
+            current = current.Next[0];
+        }
     }
 
     public bool Remove(T item)
     {
-        throw new NotImplementedException();
+        if (item == null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
+
+        var current = _head;
+        var update = new Node[MaxLevels];
+        bool found = false;
+
+        for (var i = MaxLevels - 1; i >= 0; i--)
+        {
+            while (current.Next[i] != null && Compare(current.Next[i].Value, item) < 0)
+            {
+                current = current.Next[i];
+            }
+            update[i] = current;
+        }
+
+        if (current.Next[0] != null && EqualityComparer<T>.Default.Equals(current.Next[0].Value, item))
+        {
+            found = true;
+            var nodeToRemove = current.Next[0];
+
+            for (var i = 0; i < nodeToRemove.Height; i++)
+            {
+                if (update[i].Next[i] != nodeToRemove) break;
+                update[i] = nodeToRemove.Next[i];
+            }
+
+            _count--;
+            _version++;
+        }
+        
+        return found;
     }
 
     public int Count => _count;
     public bool IsReadOnly => false;
     public int IndexOf(T item)
     {
-        throw new NotImplementedException();
+        if (item == null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
+
+        var index = 0;
+        var current = _head.Next[0];
+        while (current != null)
+        {
+            if (EqualityComparer<T>.Default.Equals(current.Value, item))
+            {
+                return index;
+            }
+
+            index++;
+            current = current.Next[0];
+        }
+        return -1;
     }
 
     public void Insert(int index, T item)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException("Insert by index is not supported in SkipList. Use Add method instead.");
     }
 
     public void RemoveAt(int index)
     {
-        throw new NotImplementedException();
+        if (index < 0 || index >= _count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(index));
+        }
+
+        var current = _head.Next[0];
+        Node previous = null;
+        for (int i = 0; i < index; i++)
+        {
+            previous = current;
+            current = current.Next[0];
+        }
+
+        Remove(current.Value);
     }
 
     public T this[int index]
@@ -136,4 +243,7 @@ public class SkipList<T> : IList<T>
         get => throw new NotImplementedException();
         set => throw new NotImplementedException();
     }
+
+    
 }
+
