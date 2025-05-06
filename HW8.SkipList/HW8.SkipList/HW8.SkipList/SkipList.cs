@@ -15,10 +15,10 @@ public class SkipList<T> : IList<T>
 {
     private class Node(T value, int height)
     {
-        public T Value { get; set; } = value ?? throw new ArgumentNullException(nameof(value));
-
+        public T Value { get; set; } = value;
+    
         public Node?[] Next { get; set; } = new Node[height];
-
+    
         public int Height => this.Next.Length;
     }
 
@@ -28,6 +28,19 @@ public class SkipList<T> : IList<T>
     private int _count = 0;
     private Node _head = new(default!, MaxLevels);
     private int _version = 0;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SkipList{T}"/> class.
+    /// </summary>
+    public SkipList()
+    {
+        this._head = new Node(default!, MaxLevels);
+        for (int i = 0; i < MaxLevels; i++)
+        {
+            this._head.Next[i] = null;
+        }
+        this._count = 0;
+    }
 
     /// <summary>
     /// Returns an enumerator that iterates through the skip list
@@ -68,7 +81,7 @@ public class SkipList<T> : IList<T>
 
         for (var i = MaxLevels - 1; i >= 0; i--)
         {
-            while (current.Next != null && Compare(current.Next[i]!.Value, item) < 0)
+            while (current.Next[i] != null && Compare(current.Next[i].Value, item) < 0)
             {
                 current = current.Next[i];
             }
@@ -366,4 +379,31 @@ public class SkipList<T> : IList<T>
         }
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
+    public T[] ToArray()
+    {
+        var array = new T[this._count];
+        var current = this._head.Next[0];
+        int index = 0;
+        while (current != null)
+        {
+            array[index++] = current.Value;
+            current = current.Next[0];
+        }
+
+        return array;
+    }
+    
+    public SkipList(IEnumerable<T> collection)
+    {
+        _head = new Node(default!, MaxLevels);
+        _count = 0;
+        foreach (var item in collection)
+        {
+            Add(item);
+        }
+    }
 }
