@@ -13,12 +13,12 @@ using System.Collections.Generic;
 /// <typeparam name="T">The type of elements in the skip list</typeparam>
 public class SkipList<T> : IList<T>
 {
-    private class Node(T value, int height)
+    private class Node(T? value, int height)
     {
-        public T Value { get; set; } = value;
-    
+        public T? Value { get; set; } = value;
+
         public Node?[] Next { get; set; } = new Node[height];
-    
+
         public int Height => this.Next.Length;
     }
 
@@ -26,7 +26,7 @@ public class SkipList<T> : IList<T>
     private const int MaxLevels = 4;
     private readonly Random _random = new();
     private int _count = 0;
-    private Node _head = new(default!, MaxLevels);
+    private Node _head;
     private int _version = 0;
 
     /// <summary>
@@ -34,11 +34,12 @@ public class SkipList<T> : IList<T>
     /// </summary>
     public SkipList()
     {
-        this._head = new Node(default!, MaxLevels);
+        this._head = new Node(default, MaxLevels);
         for (int i = 0; i < MaxLevels; i++)
         {
             this._head.Next[i] = null;
         }
+
         this._count = 0;
     }
 
@@ -48,10 +49,14 @@ public class SkipList<T> : IList<T>
     /// <returns>An enumerator for the skip list.</returns>
     public IEnumerator<T> GetEnumerator()
     {
-        var current = this._head.Next[0];
+        Node? current = this._head.Next[0];
         while (current != null)
         {
-            yield return current.Value;
+            if (current.Value != null)
+            {
+                yield return current.Value;
+            }
+
             current = current.Next[0];
         }
     }
@@ -67,21 +72,21 @@ public class SkipList<T> : IList<T>
     /// </summary>
     /// <param name="item">The object to add to the skip list.</param>
     /// <exception cref="ArgumentNullException">Thrown when item is null.</exception>
-    public void Add(T item)
+    public void Add(T? item)
     {
         if (item == null)
         {
             throw new ArgumentNullException(nameof(item));
         }
 
-        var current = this._head;
+        Node? current = this._head;
         int level = this.ChooseRandomLevel();
-        var update = new Node[MaxLevels];
-        var newNode = new Node(item, level);
+        Node?[] update = new Node?[MaxLevels];
+        Node newNode = new Node(item, level);
 
         for (var i = MaxLevels - 1; i >= 0; i--)
         {
-            while (current.Next[i] != null && Compare(current.Next[i].Value, item) < 0)
+            while (current?.Next[i] != null && this.Compare(current.Next[i].Value, item) < 0)
             {
                 current = current.Next[i];
             }
@@ -91,14 +96,14 @@ public class SkipList<T> : IList<T>
 
         for (int i = 0; i < level; i++)
         {
-            newNode.Next[i] = update[i].Next[i];
+            newNode.Next[i] = update[i]?.Next[i];
             update[i].Next[i] = newNode;
         }
 
         this._count++;
     }
 
-    private int Compare(T a, T b)
+    private int Compare(T? a, T? b)
     {
         if (a == null && b == null)
         {
@@ -141,7 +146,7 @@ public class SkipList<T> : IList<T>
     {
         for (int i = 0; i < this._head.Next.Length; i++)
         {
-            this._head.Next[i] = null!;
+            this._head.Next[i] = null;
         }
 
         this._count = 0;
@@ -154,14 +159,14 @@ public class SkipList<T> : IList<T>
     /// <param name="item">The object to locate in the skip list.</param>
     /// <returns>true if item is found; otherwise, false.</returns>
     /// <exception cref="ArgumentNullException">Thrown when item is null.</exception>
-    public bool Contains(T item)
+    public bool Contains(T? item)
     {
         if (item == null)
         {
             throw new ArgumentNullException(nameof(item));
         }
 
-        var current = this._head;
+        Node? current = this._head;
         for (var i = MaxLevels - 1; i >= 0; i--)
         {
             while (current != null && current.Next[i] != null && this.Compare(current.Next[i].Value, item) <= 0)
@@ -185,7 +190,7 @@ public class SkipList<T> : IList<T>
     /// <exception cref="ArgumentNullException">Thrown when array is null.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when arrayIndex is less than 0.</exception>
     /// <exception cref="ArgumentException">Thrown when the number of elements is greater than available space.</exception>
-    public void CopyTo(T[] array, int arrayIndex)
+    public void CopyTo(T?[]? array, int arrayIndex)
     {
         if (array == null)
         {
@@ -202,7 +207,7 @@ public class SkipList<T> : IList<T>
             throw new ArgumentException("В целемом массиве мало мета");
         }
 
-        var current = this._head.Next[0];
+        Node? current = this._head.Next[0];
         while (current != null)
         {
             array[arrayIndex++] = current.Value;
@@ -216,15 +221,15 @@ public class SkipList<T> : IList<T>
     /// <param name="item">The object to remove from the skip list.</param>
     /// <returns>true if item was successfully removed; otherwise, false.</returns>
     /// <exception cref="ArgumentNullException">Thrown when item is null.</exception>
-    public bool Remove(T item)
+    public bool Remove(T? item)
     {
         if (item == null)
         {
             throw new ArgumentNullException(nameof(item));
         }
 
-        var current = this._head;
-        var update = new Node[MaxLevels];
+        Node? current = this._head;
+        Node[] update = new Node[MaxLevels];
         bool found = false;
 
         for (var i = MaxLevels - 1; i >= 0; i--)
@@ -240,7 +245,7 @@ public class SkipList<T> : IList<T>
         if (current.Next[0] != null && EqualityComparer<T>.Default.Equals(current.Next[0].Value, item))
         {
             found = true;
-            var nodeToRemove = current.Next[0];
+            Node? nodeToRemove = current.Next[0];
 
             if (nodeToRemove != null)
             {
@@ -278,7 +283,7 @@ public class SkipList<T> : IList<T>
     /// <param name="item">The object to locate in the skip list.</param>
     /// <returns>The index of item if found; otherwise, -1.</returns>
     /// <exception cref="ArgumentNullException">Thrown when item is null.</exception>
-    public int IndexOf(T item)
+    public int IndexOf(T? item)
     {
         if (item == null)
         {
@@ -286,7 +291,7 @@ public class SkipList<T> : IList<T>
         }
 
         var index = 0;
-        var current = this._head.Next[0];
+        Node? current = this._head.Next[0];
         while (current != null)
         {
             if (EqualityComparer<T>.Default.Equals(current.Value, item))
@@ -324,7 +329,7 @@ public class SkipList<T> : IList<T>
             throw new ArgumentOutOfRangeException(nameof(index));
         }
 
-        var current = this._head.Next[0] ?? throw new InvalidOperationException("List is empty");
+        Node current = this._head.Next[0] ?? throw new InvalidOperationException("List is empty");
         for (int i = 0; i < index; i++)
         {
             current = current.Next[0] ?? throw new InvalidOperationException("Unexpected null node");
@@ -339,7 +344,7 @@ public class SkipList<T> : IList<T>
     /// <param name="index">The zero-based index of the element to get or set.</param>
     /// <returns>The element at the specified index.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when index is invalid.</exception>
-    public T this[int index]
+    public T? this[int index]
     {
         get
         {
@@ -348,7 +353,7 @@ public class SkipList<T> : IList<T>
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            var current = this._head.Next[0]!;
+            Node current = this._head.Next[0]!;
             for (var i = 0; i < index; i++)
             {
                 current = current.Next[0]!;
@@ -364,7 +369,7 @@ public class SkipList<T> : IList<T>
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            var current = this._head.Next[0];
+            Node? current = this._head.Next[0];
             for (var i = 0; i < index; i++)
             {
                 current = current?.Next[0];
@@ -380,13 +385,13 @@ public class SkipList<T> : IList<T>
     }
 
     /// <summary>
-    ///
+    /// Copies the elements of the skip list to a new array, preserving their sorted order.
     /// </summary>
-    /// <returns></returns>
-    public T[] ToArray()
+    /// <returns>An array containing all elements of the skip list in sorted order.</returns>
+    public T?[] ToArray()
     {
-        var array = new T[this._count];
-        var current = this._head.Next[0];
+        T?[] array = new T[this._count];
+        Node? current = this._head.Next[0];
         int index = 0;
         while (current != null)
         {
@@ -395,15 +400,5 @@ public class SkipList<T> : IList<T>
         }
 
         return array;
-    }
-    
-    public SkipList(IEnumerable<T> collection)
-    {
-        _head = new Node(default!, MaxLevels);
-        _count = 0;
-        foreach (var item in collection)
-        {
-            Add(item);
-        }
     }
 }

@@ -11,6 +11,7 @@ public class Tests
         public void Constructor_WhenListIsCreated_ItShouldBeEmpty()
         {
             var list = new SkipList<int>();
+            if (list == null) throw new ArgumentNullException(nameof(list));
             Assert.That(list.Count, Is.EqualTo(0));
             Assert.That(list.IsReadOnly, Is.False);
         }
@@ -29,7 +30,8 @@ public class Tests
         [Test]
         public void Add_WhenNullItemIsAdded_ItShouldThrowArgumentNullException()
         {
-            var list = new SkipList<string>();
+            var list = new SkipList<string?>();
+            if (list == null) throw new ArgumentNullException(nameof(list));
             Assert.Throws<ArgumentNullException>(() => list.Add(null!));
         }
 
@@ -50,8 +52,11 @@ public class Tests
         [Test]
         public void Contains_WhenItemIsNull_ItShouldThrowArgumentNullException()
         {
-            var list = new SkipList<string> { "a", "b", "c" };
-            Assert.Throws<ArgumentNullException>(() => list.Contains(null!));
+            var list = new SkipList<string?> { "a", "b", "c" };
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                var contains = list.Contains(null);
+            });
         }
 
         [Test]
@@ -78,8 +83,9 @@ public class Tests
         [Test]
         public void Remove_WhenItemIsNull_ItShouldThrowArgumentNullException()
         {
-            var list = new SkipList<string> { "a", "b", "c" };
-            Assert.Throws<ArgumentNullException>(() => list.Remove(null!));
+            var list = new SkipList<string?> { "a", "b", "c" };
+            if (list == null) throw new ArgumentNullException(nameof(list));
+            Assert.Throws<ArgumentNullException>(() => list.Remove(null));
         }
 
         [Test]
@@ -106,7 +112,7 @@ public class Tests
         public void CopyTo_NullArray_ThrowsArgumentNullException()
         {
             var list = new SkipList<int> { 1, 2, 3 };
-            Assert.Throws<ArgumentNullException>(() => list.CopyTo(null!, 0));
+            Assert.Throws<ArgumentNullException>(() => list.CopyTo(null, 0));
         }
 
         [Test]
@@ -142,8 +148,11 @@ public class Tests
         [Test]
         public void IndexOf_WhenItemIsNull_ItShouldThrowArgumentNullException()
         {
-            var list = new SkipList<string> { "a", "b", "c" };
-            Assert.Throws<ArgumentNullException>(() => list.IndexOf(null!));
+            var list = new SkipList<string?> { "a", "b", "c" };
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                var indexOf = list.IndexOf(null);
+            });
         }
 
         [Test]
@@ -160,6 +169,7 @@ public class Tests
         public void RemoveAt_WhenInvalidIndex_ItShouldThrowArgumentOutOfRangeException()
         {
             var list = new SkipList<int> { 1, 2, 3 };
+            if (list == null) throw new ArgumentNullException(nameof(list));
             Assert.Throws<ArgumentOutOfRangeException>(() => list.RemoveAt(-1));
             Assert.Throws<ArgumentOutOfRangeException>(() => list.RemoveAt(3));
         }
@@ -192,6 +202,7 @@ public class Tests
         public void Indexer_Set_WhenIndexIsInvalid_ItShouldThrowArgumentOutOfRangeException()
         {
             var list = new SkipList<int> { 1, 2, 3 };
+            if (list == null) throw new ArgumentNullException(nameof(list));
             Assert.Throws<ArgumentOutOfRangeException>(() => list[-1] = 0);
             Assert.Throws<ArgumentOutOfRangeException>(() => list[3] = 4);
         }
@@ -200,6 +211,7 @@ public class Tests
         public void Insert_ThrowsNotSupportedException()
         {
             var list = new SkipList<int> { 1, 2, 3 };
+            if (list == null) throw new ArgumentNullException(nameof(list));
             Assert.Throws<NotSupportedException>(() => list.Insert(1, 4));
         }
 
