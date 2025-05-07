@@ -11,7 +11,6 @@ public class Trie
     /// and is initialized with a default symbol ('\0').
     /// </summary>
     private readonly Node _root = new Node(0);
-
     private int _nextCode = 0;
 
     public Trie()
@@ -26,10 +25,7 @@ public class Trie
     /// Adds a word to the tree
     /// </summary>
     /// <param name="key"></param>
-    public void Add(byte[] key)
-    {
-        _root.AddNode(key, _nextCode++);
-    }
+    public void Add(byte[] key) => _root.AddNode(key, _nextCode++);
 
     /// <summary>
     /// Checks if there is such a word in the tree.
@@ -38,7 +34,13 @@ public class Trie
     /// <returns>True if such a word is contained in the tree.</returns>
     public bool TryGetCode(byte[] key, out ushort code)
     {
-        return _root.TryGetCode(key, out code);
+        if (_root.TryGetCode(key, out int intCode))
+        {
+            code = (ushort)intCode;
+            return true;
+        }
+        code = 0;
+        return false;
     }
     
     public int GetNextCode() => _nextCode;

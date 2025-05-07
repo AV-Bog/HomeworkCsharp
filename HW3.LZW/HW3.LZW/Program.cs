@@ -2,29 +2,27 @@
 using System.IO;
 using HW3.LZW;
 
-/*RunReserchBWT(); посмотрите что там не так (т.к. файл большой, в оперативку не пишу, но все равно долговато. просто я уже запуталась)*/
-
 Console.Write("Введите путь к файлу, который надо сжать или разжать: ");
-string filePath = Console.ReadLine();
+string filePath = Console.ReadLine() ?? "";
 while (!File.Exists(filePath))
 {
-    Console.WriteLine("Нормально введи ПУТЬ ДО ФАЙЛА");
-    filePath = Console.ReadLine();
+    Console.WriteLine("Файл не найден. Введите корректный путь: ");
+    filePath = Console.ReadLine() ?? "";
 }
 
 Console.Write("Введите ключ -c, означающий, что файл надо сжать, или -u, означающий, что надо разжать: ");
-string userInput = Console.ReadLine();
-if (userInput == "-c")
+string mode = Console.ReadLine()?.ToLower() ?? "";
+
+bool AskYesNo(string question)
 {
-    string outputFilePath = GenerateOutputFilePath(filePath, 1);
-    Console.WriteLine("Файл сжимается... Просим вас подождать");
-    LZW.CompressFile(filePath, outputFilePath);
-    Console.WriteLine("Файл сжался с коэффицентом сжатия = {0}", CCR.CalculateCompressionRatio(filePath, outputFilePath));
-}
-if (userInput == "-u")
-{
-    string outputFilePath = GenerateOutputFilePath(filePath, 0);
-    LZW.DecompressFile(filePath, outputFilePath);
+    Console.Write(question + " [y/n] ");
+    while (true)
+    {
+        string input = Console.ReadLine()?.ToLower() ?? "";
+        if (input == "y") return true;
+        if (input == "n") return false;
+        Console.Write("Пожалуйста, введите 'y' или 'n': ");
+    }
 }
 
 void RunReserchBWT()
@@ -40,18 +38,83 @@ void RunReserchBWT()
     Console.WriteLine(result);
 }
 
-string GenerateOutputFilePath(string filePath, int key)
+string GenerateOutputPath(string inputPath, bool isCompress)
 {
-    string directory = Path.GetDirectoryName(filePath);
-    string fileName = Path.GetFileNameWithoutExtension(filePath);
-    string fileNameWithExtension = Path.GetFileName(filePath);
+    string directory = Path.GetDirectoryName(inputPath) ?? "";
+    string fileName = Path.GetFileNameWithoutExtension(inputPath);
+    string extension = Path.GetExtension(inputPath);
 
-    if (key == 1)
+    if (isCompress)
     {
-        return Path.Combine(directory, $"{fileNameWithExtension}.zipped");
+        return Path.Combine(directory, $"{fileName}{extension}.zipped");
     }
     else
     {
-        return Path.Combine(directory, $"{fileName}");
+        if (inputPath.EndsWith(".zipped"))
+        {
+            return Path.Combine(directory, fileName);
+        }
+        return Path.Combine(directory, $"{fileName}_decompressed{extension}");
+    }
+}
+
+switch (mode)
+{
+    case "-c":
+        string compressedPath = GenerateOutputPath(filePath, true);
+        Console.WriteLine("Сжатие начато...");
+        
+        bool useBWT = AskYesNo("Использовать BWT преобразование?");
+        LZW.CompressFile(filePath, compressedPath, useBWT);
+        
+        double ratio = CCR.CalculateCompressionRatio(filePath, compressedPath);
+        Console.WriteLine($"Сжатие завершено. Коэффициент сжатия: {ratio:F2}");
+        break;
+        
+    case "-u":
+        string decompressedPath = GenerateOutputPath(filePath, false);
+        Console.WriteLine("Распаковка начата...");
+        LZW.DecompressFile(filePath, decompressedPath);
+        Console.WriteLine("Распаковка завершена.");
+        break;
+        
+    default:
+        Console.WriteLine("Неверный режим. Используйте -c для сжатия или -u для распаковки.");
+        break;
+}
+
+void RunBWTResearch()
+{
+    Console.Write("Введите путь к файлу для исследования BWT: ");
+    string researchFile = Console.ReadLine() ?? "";
+    
+    if (!File.Exists(researchFile))
+    {
+        Console.WriteLine("Файл не найден.");
+        return;
+    }
+
+    string originalCompressed = Path.GetTempFileName();
+    string bwtCompressed = Path.GetTempFileName();
+
+    try
+    {
+        // Сжатие без BWT
+        LZW.CompressFile(researchFile, originalCompressed, false);
+        long originalSize = new FileInfo(originalCompressed).Length;
+
+        // Сжатие с BWT
+        LZW.CompressFile(researchFile, bwtCompressed, true);
+        long bwtSize = new FileInfo(bwtCompressed).Length;
+
+        Console.WriteLine($"Результаты исследования:\n" +
+                          $"Без BWT: {originalSize} байт\n" +
+                          $"С BWT: {bwtSize} байт\n" +
+                          $"Разница: {originalSize - bwtSize} байт ({(double)originalSize/bwtSize:F2}x)");
+    }
+    finally
+    {
+        File.Delete(originalCompressed);
+        File.Delete(bwtCompressed);
     }
 }

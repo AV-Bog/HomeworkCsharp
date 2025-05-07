@@ -8,8 +8,6 @@ public class CCR
         
         long originalSize = new FileInfo(inputFilePath).Length;
         long compressedSize = new FileInfo(outputFilePath).Length;
-        double compressionRatio = (double)originalSize / compressedSize;
-
-        return compressionRatio;
+        return (double)originalSize / compressedSize;
     }
 }

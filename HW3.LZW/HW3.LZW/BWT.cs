@@ -96,16 +96,13 @@ public static class BWT
     public static byte[] Reverse(byte[] input, int position)
     {
         int length = input.Length;
-        
         var count = new int[256];
         var sum = new int[256];
         var next = new int[length];
         
-        foreach (char b in input)
-        {
-            count[b]++;
-        }
+        foreach (char b in input) count[b]++;
         
+        sum[0] = count[0];
         for (int i = 0; i < 256; i++)
         {
             sum[i] = sum[i - 1] - count[i - 1];
@@ -114,8 +111,7 @@ public static class BWT
         for (int i = 0; i < length; i++)
         {
             byte b = input[i];
-            next[sum[b]] = i;
-            sum[b]++;
+            next[sum[b]++] = i;
         }
         
         var result = new byte[length];

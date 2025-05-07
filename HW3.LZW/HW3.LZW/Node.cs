@@ -1,10 +1,20 @@
 namespace HW3.LZW;
 
-public class Node (byte symbol)
+public class Node ()
 {
-    private byte Symbol { get; } = symbol;
+    private byte Symbol { get; }
     private Dictionary<byte, Node> SubNodes { get; } = new();
-    private int Code { get; set; } = -1;
+    private int Code { get; set; }
+
+    public Node(byte symbol) : this()
+    {
+         Symbol = symbol;
+    }
+    
+    public Node(ushort code) : this(0)
+    {
+        Code = code;
+    }
     
     public Node? TryFind(byte symbol)
     {
@@ -13,37 +23,31 @@ public class Node (byte symbol)
     
     public void AddNode(byte[] key, int code)
     {
-        if (key.Length == 0)
+        Node current = this;
+        foreach (var b in key)
         {
-            Code = code;
-        }
-        else
-        {
-            byte symbol = key[0];
-            if (!SubNodes.TryGetValue(symbol, out var subnode))
+            if (!current.SubNodes.ContainsKey(b))
             {
-                subnode = new Node(symbol);
-                SubNodes.Add(symbol, subnode);
+                current.SubNodes[b] = new Node(0);
             }
-            subnode.AddNode(key[1..], code);
+            
+            current = current.SubNodes[b];
         }
+        current.Code = (ushort)code;
     }
     
-    public bool TryGetCode(byte[] key, out ushort code)
+    public bool TryGetCode(byte[] key, out int code)
     {
-        if (key.Length == 0)
+        Node current = this;
+        foreach (byte b in key)
         {
-            code = (ushort)Code;
-            return Code != -1;
+            if (!current.SubNodes.TryGetValue(b, out current))
+            {
+                code = 0;
+                return false;
+            }
         }
-
-        var subnode = TryFind(key[0]);
-        if (subnode == null)
-        {
-            code = 0;
-            return false;
-        }
-
-        return subnode.TryGetCode(key[1..], out code);
+        code = current.Code;
+        return code != 0;
     }
 }
