@@ -1,26 +1,38 @@
-﻿using System;
+﻿// <copyright file="Program.cs" author="AV-Bog">
+// under MIT License
+// </copyright>
+
+using System;
 using System.IO;
 using HW3.LZW;
 
 Console.Write("Введите путь к файлу, который надо сжать или разжать: ");
-string filePath = Console.ReadLine() ?? "";
+string filePath = Console.ReadLine() ?? string.Empty;
 while (!File.Exists(filePath))
 {
     Console.WriteLine("Файл не найден. Введите корректный путь: ");
-    filePath = Console.ReadLine() ?? "";
+    filePath = Console.ReadLine() ?? string.Empty;
 }
 
 Console.Write("Введите ключ -c, означающий, что файл надо сжать, или -u, означающий, что надо разжать: ");
-string mode = Console.ReadLine()?.ToLower() ?? "";
+string mode = Console.ReadLine()?.ToLower() ?? string.Empty;
 
 bool AskYesNo(string question)
 {
     Console.Write(question + " [y/n] ");
     while (true)
     {
-        string input = Console.ReadLine()?.ToLower() ?? "";
-        if (input == "y") return true;
-        if (input == "n") return false;
+        string input = Console.ReadLine()?.ToLower() ?? string.Empty;
+        if (input == "y")
+        {
+            return true;
+        }
+
+        if (input == "n")
+        {
+            return false;
+        }
+
         Console.Write("Пожалуйста, введите 'y' или 'n': ");
     }
 }
@@ -40,7 +52,7 @@ void RunReserchBWT()
 
 string GenerateOutputPath(string inputPath, bool isCompress)
 {
-    string directory = Path.GetDirectoryName(inputPath) ?? "";
+    string directory = Path.GetDirectoryName(inputPath) ?? string.Empty;
     string fileName = Path.GetFileNameWithoutExtension(inputPath);
     string extension = Path.GetExtension(inputPath);
 
@@ -54,6 +66,7 @@ string GenerateOutputPath(string inputPath, bool isCompress)
         {
             return Path.Combine(directory, fileName);
         }
+
         return Path.Combine(directory, $"{fileName}_decompressed{extension}");
     }
 }
@@ -63,21 +76,21 @@ switch (mode)
     case "-c":
         string compressedPath = GenerateOutputPath(filePath, true);
         Console.WriteLine("Сжатие начато...");
-        
-        bool useBWT = AskYesNo("Использовать BWT преобразование?");
-        LZW.CompressFile(filePath, compressedPath, useBWT);
-        
+
+        bool useBwt = AskYesNo("Использовать BWT преобразование?");
+        LZW.CompressFile(filePath, compressedPath, useBwt);
+
         double ratio = CCR.CalculateCompressionRatio(filePath, compressedPath);
         Console.WriteLine($"Сжатие завершено. Коэффициент сжатия: {ratio:F2}");
         break;
-        
+
     case "-u":
         string decompressedPath = GenerateOutputPath(filePath, false);
         Console.WriteLine("Распаковка начата...");
         LZW.DecompressFile(filePath, decompressedPath);
         Console.WriteLine("Распаковка завершена.");
         break;
-        
+
     default:
         Console.WriteLine("Неверный режим. Используйте -c для сжатия или -u для распаковки.");
         break;
@@ -86,8 +99,8 @@ switch (mode)
 void RunBWTResearch()
 {
     Console.Write("Введите путь к файлу для исследования BWT: ");
-    string researchFile = Console.ReadLine() ?? "";
-    
+    string researchFile = Console.ReadLine() ?? string.Empty;
+
     if (!File.Exists(researchFile))
     {
         Console.WriteLine("Файл не найден.");
@@ -110,7 +123,7 @@ void RunBWTResearch()
         Console.WriteLine($"Результаты исследования:\n" +
                           $"Без BWT: {originalSize} байт\n" +
                           $"С BWT: {bwtSize} байт\n" +
-                          $"Разница: {originalSize - bwtSize} байт ({(double)originalSize/bwtSize:F2}x)");
+                          $"Разница: {originalSize - bwtSize} байт ({(double)originalSize / bwtSize:F2}x)");
     }
     finally
     {

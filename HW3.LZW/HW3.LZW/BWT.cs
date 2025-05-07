@@ -1,13 +1,19 @@
-using System;
-using System.IO;
-using System.Linq;
+// <copyright file="BWT.cs" author="AV-Bog">
+// under MIT License
+// </copyright>
 
 namespace HW3.LZW;
 
-using System.Text;
-
+/// <summary>
+/// Provides Burrows-Wheeler Transform (BWT) functionality for data compression
+/// </summary>
 public static class BWT
 {
+    /// <summary>
+    /// Compares compression efficiency with and without BWT transformation
+    /// </summary>
+    /// <param name="fileName">Path to the file to analyze.</param>
+    /// <returns>Formatted string with comparison results.</returns>
     public static string Research(string fileName)
     {
         string bwtFileName = Path.GetTempFileName();
@@ -24,7 +30,8 @@ public static class BWT
             long originalCompressedFileSize = new FileInfo(originalCompressedFilePath).Length;
             long bwtCompressedFileSize = new FileInfo(bwtCompressedFilePath).Length;
 
-            return $"Original compressed size: {originalCompressedFileSize} bytes\nBWT compressed size: {bwtCompressedFileSize} bytes";
+            return
+                $"Original compressed size: {originalCompressedFileSize} bytes\nBWT compressed size: {bwtCompressedFileSize} bytes";
         }
         finally
         {
@@ -34,9 +41,14 @@ public static class BWT
         }
     }
 
+    /// <summary>
+    /// Applies BWT transformation to a file in blocks
+    /// </summary>
+    /// <param name="inputFile">Input file path.</param>
+    /// <param name="outputFile">Output file path.</param>
     private static void ApplyBWTByBlocks(string inputFile, string outputFile)
     {
-        const int blockSize = 1024 * 1024; // 1 МБ
+        const int blockSize = 1024 * 1024;
         byte[] buffer = new byte[blockSize];
 
         using (var inputStream = new FileStream(inputFile, FileMode.Open, FileAccess.Read))
@@ -49,14 +61,19 @@ public static class BWT
                 {
                     break;
                 }
-                
+
                 var (bwtData, position) = Direct(buffer.Take(bytesRead).ToArray());
                 outputStream.Write(bwtData, 0, bwtData.Length);
             }
         }
     }
 
-    public static (byte[] output, int position) Direct(byte[] input)
+    /// <summary>
+    /// Performs direct Burrows-Wheeler Transform on input data
+    /// </summary>
+    /// <param name="input">Input byte array.</param>
+    /// <returns>Tuple containing transformed data and original position.</returns>
+    public static (byte[] Output, int Position) Direct(byte[] input)
     {
         int length = input.Length;
         byte[][] rotation = new byte[length][];
@@ -73,13 +90,20 @@ public static class BWT
         {
             for (int i = 0; i < length; i++)
             {
-                if (a[i] < b[i]) return -1;
-                if (a[i] > b[i]) return 1;
+                if (a[i] < b[i])
+                {
+                    return -1;
+                }
+
+                if (a[i] > b[i])
+                {
+                    return 1;
+                }
             }
 
             return 0;
         });
-    
+
         byte[] output = new byte[length];
         int position = 0;
         for (int i = 0; i < length; i++)
@@ -90,30 +114,40 @@ public static class BWT
                 position = i;
             }
         }
+
         return (output, position);
     }
-    
+
+    /// <summary>
+    /// Reverses Burrows-Wheeler Transform
+    /// </summary>
+    /// <param name="input">Transformed byte array.</param>
+    /// <param name="position">Original position marker.</param>
+    /// <returns>Original data before transformation.</returns>
     public static byte[] Reverse(byte[] input, int position)
     {
         int length = input.Length;
         var count = new int[256];
         var sum = new int[256];
         var next = new int[length];
-        
-        foreach (char b in input) count[b]++;
-        
+
+        foreach (char b in input)
+        {
+            count[b]++;
+        }
+
         sum[0] = count[0];
         for (int i = 0; i < 256; i++)
         {
             sum[i] = sum[i - 1] - count[i - 1];
         }
-        
+
         for (int i = 0; i < length; i++)
         {
             byte b = input[i];
             next[sum[b]++] = i;
         }
-        
+
         var result = new byte[length];
         int current = position;
         for (int i = 0; i < length; i++)
@@ -121,7 +155,7 @@ public static class BWT
             result[i] = input[current];
             current = next[current];
         }
-    
+
         return result;
     }
 }
