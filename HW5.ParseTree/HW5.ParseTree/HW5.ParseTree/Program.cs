@@ -1,4 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿// <copyright file="Program.cs" author="AV-Bog">
+// under MIT License
+// </copyright>
 
 using HW5.ParseTree;
 

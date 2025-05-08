@@ -1,7 +1,22 @@
+// <copyright file="ExpressionEvaluator.cs" author="AV-Bog">
+// under MIT License
+// </copyright>
+
 namespace HW5.ParseTree;
 
+/// <summary>
+/// Provides functionality to evaluate mathematical expressions represented as parse trees.
+/// </summary>
 public class ExpressionEvaluator
 {
+    /// <summary>
+    /// Evaluates the expression represented by the parse tree node.
+    /// </summary>
+    /// <param name="node">The root node of the parse tree to evaluate.</param>
+    /// <returns>The result of the evaluated expression.</returns>
+    /// <exception cref="ExpressionEvaluationException">
+    /// Thrown when evaluation fails, such as division by zero.
+    /// </exception>
     public static int Evaluate(Node node)
     {
         try
@@ -15,7 +30,25 @@ public class ExpressionEvaluator
     }
 }
 
+/// <summary>
+/// Evaluates the expression represented by the parse tree node.
+/// </summary>
+/// <returns>The result of the evaluated expression.</returns>
+/// <exception cref="ExpressionEvaluationException">
+/// Thrown when evaluation fails, such as division by zero.
+/// </exception>
 public class ExpressionEvaluationException : Exception
 {
-    public ExpressionEvaluationException(string message) : base(message) {}
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ExpressionEvaluationException"/> class.
+    /// Evaluates the expression represented by the parse tree node.
+    /// </summary>
+    /// <returns>The result of the evaluated expression.</returns>
+    /// <exception cref="ExpressionEvaluationException">
+    /// Thrown when evaluation fails, such as division by zero.
+    /// </exception>
+    public ExpressionEvaluationException(string message)
+        : base(message)
+    {
+    }
 }
