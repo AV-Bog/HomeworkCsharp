@@ -43,8 +43,12 @@ public static class MyLinq
             if (count < n)
             {
                 yield return item;
+                count++;
             }
-            count++;
+            else
+            {
+                yield break;
+            }
         }
     }
 
@@ -64,7 +68,10 @@ public static class MyLinq
             {
                 yield return item;
             }
-            count++;
+            else
+            {
+                count++;
+            }
         }
     }
     

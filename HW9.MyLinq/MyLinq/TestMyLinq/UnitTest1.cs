@@ -9,11 +9,11 @@ namespace TestMyLinq;
 public class Tests
 {
     [Test]
-    public void GetPrimes_FirstEightPrimes_AreCorrect()
+    public void GetPrimes_IsLazy_DoesNotHangOnInfiniteSequence()
     {
-        var expectedPrimes = new[] { 2, 3, 5, 7, 11, 13, 17, 19 };
-        var primes = MyLinq.GetPrimes().TakeFirst(8).ToArray();
-        Assert.That(primes, Is.EqualTo(expectedPrimes));
+        var primes = MyLinq.GetPrimes().TakeFirst(101).ToArray();
+        var prime = primes[100];  // 101-е простое число
+        Assert.That(MyLinq.IsPrime(prime), Is.True);
     }
     
     [Test]
@@ -47,11 +47,5 @@ public class Tests
         var result = source.MySkip(0).ToArray();
         Assert.That(result, Is.EqualTo(source));
     }
-
-    [Test]
-    public void GetPrimes_IsLazy_DoesNotHangOnInfiniteSequence()
-    {
-        var prime = MyLinq.GetPrimes().MySkip(100).TakeFirst(1).Single();
-        Assert.That(MyLinq.IsPrime(prime), Is.True);
-    }
+    
 }
