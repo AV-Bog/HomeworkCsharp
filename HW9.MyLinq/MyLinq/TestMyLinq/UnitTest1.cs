@@ -12,10 +12,10 @@ public class Tests
     public void GetPrimes_IsLazy_DoesNotHangOnInfiniteSequence()
     {
         var primes = MyLinq.GetPrimes().TakeFirst(101).ToArray();
-        var prime = primes[100];  // 101-е простое число
+        var prime = primes[100];
         Assert.That(MyLinq.IsPrime(prime), Is.True);
     }
-    
+
     [Test]
     public void TakeFirst_ReturnsCorrectNumberOfElements()
     {
@@ -31,7 +31,7 @@ public class Tests
         var result = source.TakeFirst(5).ToArray();
         Assert.That(result, Is.EqualTo(new[] { 1, 2 }));
     }
-    
+
     [Test]
     public void MySkip_SkipsCorrectNumberOfElements()
     {
@@ -47,5 +47,4 @@ public class Tests
         var result = source.MySkip(0).ToArray();
         Assert.That(result, Is.EqualTo(source));
     }
-    
 }

@@ -2,8 +2,6 @@
 // under MIT License
 // </copyright>
 
-using System.Collections;
-
 namespace HW9.MyLinq;
 
 /// <summary>
@@ -19,7 +17,7 @@ public static class MyLinq
     /// <returns>An infinite IEnumerable&lt;int&gt; sequence of prime numbers.</returns>
     public static IEnumerable<int> GetPrimes()
     {
-        for (int i = 2;; i++)
+        for (int i = 2; ; i++)
         {
             if (IsPrime(i))
             {
@@ -74,7 +72,7 @@ public static class MyLinq
             }
         }
     }
-    
+
     public static bool IsPrime(int number)
     {
         if (number < 2)
@@ -99,7 +97,7 @@ public static class MyLinq
                 return false;
             }
         }
-        
+
         return true;
     }
 }
