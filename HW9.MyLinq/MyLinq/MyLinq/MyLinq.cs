@@ -60,7 +60,7 @@ public static class MyLinq
         var count = 0;
         foreach (var item in seq)
         {
-            if (count > n)
+            if (count >= n)
             {
                 yield return item;
             }
@@ -85,7 +85,7 @@ public static class MyLinq
             return false;
         }
 
-        for (int i = 5; i * i < number; i += 6)
+        for (int i = 5; i * i <= number; i += 6)
         {
             if (number % i == 0 || number % (i + 2) == 0)
             {
