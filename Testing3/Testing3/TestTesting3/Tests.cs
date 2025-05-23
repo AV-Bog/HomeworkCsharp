@@ -1,5 +1,5 @@
 ﻿// <copyright file="Tests.cs" author="AV-Bog">
-// under MIT License
+// Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
 using Testing3;
