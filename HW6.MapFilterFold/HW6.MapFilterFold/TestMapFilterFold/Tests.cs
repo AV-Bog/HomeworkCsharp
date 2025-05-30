@@ -101,4 +101,5 @@ public class Tests
             () => Functions.Fold(list, 0, null)
         );
     }
+    
 }
