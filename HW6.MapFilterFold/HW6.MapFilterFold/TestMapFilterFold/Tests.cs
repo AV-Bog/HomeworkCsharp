@@ -7,16 +7,16 @@ public class Tests
     public void CheckFunctionMapWithNumbers()
     {
         List<int> list = new List<int> { 1, 2, 3 };
-        var rez = Functions.Map(list, x => x * 2);
-        Assert.That(rez, Is.EqualTo(new List<int> { 2, 4, 6 }));
+        var result = Functions.Map(list, x => x * 2);
+        Assert.That(result, Is.EqualTo(new List<int> { 2, 4, 6 }));
     }
     
     [Test]
     public void CheckFunctionMapWithStrings()
     {
         List<string> list = new List<string> { "qwer", "Cruel", "Du" };
-        var rez = Functions.Map(list, x => x + "ty");
-        Assert.That(rez, Is.EqualTo(new List<string> { "qwerty", "Cruelty", "Duty" }));
+        var result = Functions.Map(list, x => x + "ty");
+        Assert.That(result, Is.EqualTo(new List<string> { "qwerty", "Cruelty", "Duty" }));
     }
     
     [Test]

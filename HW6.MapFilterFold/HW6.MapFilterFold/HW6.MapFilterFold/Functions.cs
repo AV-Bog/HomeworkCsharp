@@ -1,6 +1,6 @@
 namespace HW6.MapFilterFold;
 
-public class Functions
+public static class Functions
 {
     /// <summary>
     /// Transforms each list element using the provided mapper function
@@ -51,10 +51,10 @@ public class Functions
     /// Reduces the list to a single value using initial element and accumulator function
     /// </summary>
     /// <exception cref="ArgumentNullException">Thrown when list or func is null</exception>
-    public static TAcc Fold<TInput, TAcc>(
+    public static TAccumulator Fold<TInput, TAccumulator>(
         List<TInput> list, 
-        TAcc element, 
-        Func<TAcc, TInput, TAcc> func)
+        TAccumulator element, 
+        Func<TAccumulator, TInput, TAccumulator> func)
     {
         if (list == null) throw new ArgumentNullException(nameof(list));
         if (func == null) throw new ArgumentNullException(nameof(func));
