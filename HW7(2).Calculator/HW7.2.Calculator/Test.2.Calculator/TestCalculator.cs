@@ -48,9 +48,9 @@ public class TestsCalculatorEngine
     [Test]
     public void CheckAdditionNumbersGreaterThan10()
     {
-        _calculator.EventHandler("7");
-        _calculator.EventHandler("7");
-        _calculator.EventHandler("+");
+        this._calculator.EventHandler("7");
+        this._calculator.EventHandler("7");
+        this._calculator.EventHandler("+");
         _calculator.EventHandler("2");
         _calculator.EventHandler("3");
         _calculator.EventHandler("=");

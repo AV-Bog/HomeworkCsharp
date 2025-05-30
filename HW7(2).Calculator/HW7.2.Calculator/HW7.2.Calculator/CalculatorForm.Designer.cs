@@ -1,6 +1,6 @@
 ﻿namespace HW7._2.Calculator;
 
-partial class Form1
+partial class CalculatorForm
 {
     /// <summary>
     ///  Required designer variable.
@@ -43,7 +43,7 @@ partial class Form1
         button9 = new System.Windows.Forms.Button();
         button15 = new System.Windows.Forms.Button();
         button12 = new System.Windows.Forms.Button();
-        button10 = new System.Windows.Forms.Button();
+        button0 = new System.Windows.Forms.Button();
         button11 = new System.Windows.Forms.Button();
         button14 = new System.Windows.Forms.Button();
         button13 = new System.Windows.Forms.Button();
@@ -71,7 +71,7 @@ partial class Form1
         tableLayoutPanel1.Controls.Add(button9, 2, 3);
         tableLayoutPanel1.Controls.Add(button15, 3, 3);
         tableLayoutPanel1.Controls.Add(button12, 0, 4);
-        tableLayoutPanel1.Controls.Add(button10, 1, 4);
+        tableLayoutPanel1.Controls.Add(button0, 1, 4);
         tableLayoutPanel1.Controls.Add(button11, 2, 4);
         tableLayoutPanel1.Controls.Add(button14, 3, 4);
         tableLayoutPanel1.Controls.Add(button13, 3, 0);
@@ -232,16 +232,16 @@ partial class Form1
         button12.Text = "C";
         button12.UseVisualStyleBackColor = false;
         // 
-        // button10
+        // button0
         // 
-        button10.Dock = System.Windows.Forms.DockStyle.Fill;
-        button10.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
-        button10.Location = new System.Drawing.Point(108, 435);
-        button10.Name = "button10";
-        button10.Size = new System.Drawing.Size(99, 106);
-        button10.TabIndex = 13;
-        button10.Text = "0";
-        button10.UseVisualStyleBackColor = true;
+        button0.Dock = System.Windows.Forms.DockStyle.Fill;
+        button0.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
+        button0.Location = new System.Drawing.Point(108, 435);
+        button0.Name = "button0";
+        button0.Size = new System.Drawing.Size(99, 106);
+        button0.TabIndex = 13;
+        button0.Text = "0";
+        button0.UseVisualStyleBackColor = true;
         // 
         // button11
         // 
@@ -289,7 +289,7 @@ partial class Form1
         textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
         textBox1.KeyDown += textBox1_KeyDown;
         // 
-        // Form1
+        // CalculatorForm
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -314,7 +314,7 @@ partial class Form1
     private System.Windows.Forms.Button button7;
     private System.Windows.Forms.Button button8;
     private System.Windows.Forms.Button button9;
-    private System.Windows.Forms.Button button10;
+    private System.Windows.Forms.Button button0;
     private System.Windows.Forms.Button button11;
     private System.Windows.Forms.Button button12;
     private System.Windows.Forms.Button button13;

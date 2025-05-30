@@ -4,6 +4,8 @@
 
 namespace HW7._2.Calculator;
 
+using System.Globalization;
+
 /// <summary>
 /// Represents the core logic of a calculator engine.
 /// </summary>
@@ -24,23 +26,29 @@ public class CalculatorEngine
     {
         get
         {
-            if (string.IsNullOrEmpty(_currentOperator) && _hasStoredValue)
-                return _currentValue.ToString();
+            if (string.IsNullOrEmpty(this._currentOperator) && this._hasStoredValue)
+            {
+                return this._currentValue.ToString(CultureInfo.InvariantCulture);
+            }
 
-            if (!string.IsNullOrEmpty(_currentOperator) && _isNewNumber)
-                return $"{_currentValue.ToString()} {_currentOperator}";
+            if (!string.IsNullOrEmpty(this._currentOperator) && this._isNewNumber)
+            {
+                return $"{this._currentValue.ToString(CultureInfo.InvariantCulture)} {this._currentOperator}";
+            }
 
-            if (!string.IsNullOrEmpty(_currentOperator))
-                return $"{_previousValue.ToString()} {_currentOperator} {_currentValue.ToString()}";
+            if (!string.IsNullOrEmpty(this._currentOperator))
+            {
+                return $"{this._previousValue.ToString(CultureInfo.InvariantCulture)} {this._currentOperator} {this._currentValue.ToString()}";
+            }
 
-            return _currentValue.ToString();
+            return this._currentValue.ToString(CultureInfo.InvariantCulture);
         }
     }
 
     /// <summary>
     /// Gets the current value stored in the calculator.
     /// </summary>
-    public double CurrentValue => _currentValue;
+    public double CurrentValue => this._currentValue;
 
     /// <summary>
     /// Handles input events for the calculator.
@@ -51,16 +59,16 @@ public class CalculatorEngine
     {
         switch (input)
         {
-            case "C": Clear(); break;
-            case "=": Calculate(); break;
-            case "+" or "-" or "/" or "*": OperatorProses(input); break;
-            case ".": AddDot(); break;
+            case "C": this.Clear(); break;
+            case "=": this.Calculate(); break;
+            case "+" or "-" or "/" or "*": this.OperatorProses(input); break;
+            case ".": this.AddDot(); break;
             default:
             {
                 if (input.Length == 1 && char.IsDigit(input[0]))
                 {
                     int digit = int.Parse(input);
-                    NumberProses(digit);
+                    this.NumberProses(digit);
                 }
                 else
                 {
@@ -76,92 +84,92 @@ public class CalculatorEngine
 
     private void NumberProses(int digit)
     {
-        if (_isNewNumber)
+        if (this._isNewNumber)
         {
-            _previousValue = _currentValue;
-            _currentValue = digit;
-            _isNewNumber = false;
-            _hasStoredValue = true;
-            _hasDot = false;
-            _decimalPlaces = 0;
+            this._previousValue = this._currentValue;
+            this._currentValue = digit;
+            this._isNewNumber = false;
+            this._hasStoredValue = true;
+            this._hasDot = false;
+            this._decimalPlaces = 0;
         }
         else
         {
-            if (_hasDot)
+            if (this._hasDot)
             {
-                _currentValue += digit / Math.Pow(10, _decimalPlaces + 1);
-                _decimalPlaces++;
+                this._currentValue += digit / Math.Pow(10, this._decimalPlaces + 1);
+                this._decimalPlaces++;
             }
             else
             {
-                _currentValue = _currentValue * 10 + digit;
+                this._currentValue = (this._currentValue * 10) + digit;
             }
         }
     }
 
     private void OperatorProses(string curOperator)
     {
-        if (_hasStoredValue && !_isNewNumber)
+        if (this._hasStoredValue && !this._isNewNumber)
         {
-            Calculate();
+            this.Calculate();
         }
 
-        _currentOperator = curOperator;
-        _isNewNumber = true;
+        this._currentOperator = curOperator;
+        this._isNewNumber = true;
     }
 
     private void Calculate()
     {
-        if (_hasStoredValue && !string.IsNullOrEmpty(_currentOperator))
+        if (this._hasStoredValue && !string.IsNullOrEmpty(this._currentOperator))
         {
-            switch (_currentOperator)
+            switch (this._currentOperator)
             {
                 case "+":
-                    _currentValue = _previousValue + _currentValue;
+                    this._currentValue = this._previousValue + this._currentValue;
                     break;
                 case "-":
-                    _currentValue = _previousValue - _currentValue;
+                    this._currentValue = this._previousValue - this._currentValue;
                     break;
                 case "*":
-                    _currentValue = _previousValue * _currentValue;
+                    this._currentValue = this._previousValue * this._currentValue;
                     break;
                 case "/":
-                    if (_currentValue == 0)
+                    if (this._currentValue == 0)
                     {
                         throw new DivideByZeroException("Деление на 0 не разрешено");
                     }
 
-                    _currentValue = _previousValue / _currentValue;
+                    this._currentValue = this._previousValue / this._currentValue;
                     break;
             }
 
-            _previousValue = _currentValue;
+            this._previousValue = this._currentValue;
         }
 
-        _currentOperator = "";
-        _isNewNumber = true;
-        _hasStoredValue = true;
+        this._currentOperator = "";
+        this._isNewNumber = true;
+        this._hasStoredValue = true;
     }
 
     private void AddDot()
     {
-        if (_hasDot)
+        if (this._hasDot)
         {
             throw new InvalidOperationException("2 точки не могут быть введены");
         }
 
-        _hasDot = true;
-        _decimalPlaces = 0;
+        this._hasDot = true;
+        this._decimalPlaces = 0;
     }
 
     private void Clear()
     {
-        _currentValue = 0;
-        _previousValue = 0;
-        _currentOperator = "";
-        _isNewNumber = false;
-        _hasStoredValue = false;
-        _hasDot = false;
-        _decimalPlaces = 0;
+        this._currentValue = 0;
+        this._previousValue = 0;
+        this._currentOperator = "";
+        this._isNewNumber = false;
+        this._hasStoredValue = false;
+        this._hasDot = false;
+        this._decimalPlaces = 0;
     }
 }

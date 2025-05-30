@@ -7,14 +7,14 @@ namespace HW7._2.Calculator;
 /// <summary>
 /// Represents the main form of the calculator application.
 /// </summary>
-public partial class Form1 : Form
+public partial class CalculatorForm : Form
 {
     private readonly CalculatorEngine _calculator = new CalculatorEngine();
 
     /// <summary>
     /// Initializes a new instance of the calculator form.
     /// </summary>
-    public Form1()
+    public CalculatorForm()
     {
         InitializeComponent();
         InitializeButtonEvents();
@@ -34,7 +34,7 @@ public partial class Form1 : Form
         button7.Click += (_, _) => ProcessInput("7");
         button8.Click += (_, _) => ProcessInput("8");
         button9.Click += (_, _) => ProcessInput("9");
-        button10.Click += (_, _) => ProcessInput("0");
+        button0.Click += (_, _) => ProcessInput("0");
 
         button17.Click += (_, _) => ProcessInput("+");
         button16.Click += (_, _) => ProcessInput("-");
