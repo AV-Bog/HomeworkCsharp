@@ -1,3 +1,7 @@
+// <copyright file="CalculatorEngine.cs" author="AV-Bog">
+// under MIT License
+// </copyright>
+
 namespace HW7._2.Calculator;
 
 /// <summary>
@@ -22,22 +26,22 @@ public class CalculatorEngine
         {
             if (string.IsNullOrEmpty(_currentOperator) && _hasStoredValue)
                 return _currentValue.ToString();
-            
+
             if (!string.IsNullOrEmpty(_currentOperator) && _isNewNumber)
                 return $"{_currentValue.ToString()} {_currentOperator}";
-            
+
             if (!string.IsNullOrEmpty(_currentOperator))
                 return $"{_previousValue.ToString()} {_currentOperator} {_currentValue.ToString()}";
-            
+
             return _currentValue.ToString();
         }
     }
-    
+
     /// <summary>
     /// Gets the current value stored in the calculator.
     /// </summary>
     public double CurrentValue => _currentValue;
-    
+
     /// <summary>
     /// Handles input events for the calculator.
     /// </summary>
@@ -49,7 +53,7 @@ public class CalculatorEngine
         {
             case "C": Clear(); break;
             case "=": Calculate(); break;
-            case "+" or "-" or "/" or "*": OperatorProses(input); break; 
+            case "+" or "-" or "/" or "*": OperatorProses(input); break;
             case ".": AddDot(); break;
             default:
             {
@@ -60,14 +64,16 @@ public class CalculatorEngine
                 }
                 else
                 {
-                    throw new ArgumentException($"Недопустимый ввод: '{input}'. Ожидалась цифра 0-9, точка или операция");
+                    throw new ArgumentException(
+                        $"Недопустимый ввод: '{input}'. Ожидалась цифра 0-9, точка или операция");
                 }
+
                 break;
             }
         }
     }
-    
-    
+
+
     private void NumberProses(int digit)
     {
         if (_isNewNumber)
@@ -83,23 +89,23 @@ public class CalculatorEngine
         {
             if (_hasDot)
             {
-                _currentValue+= digit / Math.Pow(10, _decimalPlaces + 1);
+                _currentValue += digit / Math.Pow(10, _decimalPlaces + 1);
                 _decimalPlaces++;
             }
             else
             {
                 _currentValue = _currentValue * 10 + digit;
             }
-
         }
     }
 
-   private void OperatorProses(string curOperator)
+    private void OperatorProses(string curOperator)
     {
         if (_hasStoredValue && !_isNewNumber)
         {
             Calculate();
         }
+
         _currentOperator = curOperator;
         _isNewNumber = true;
     }
@@ -124,9 +130,11 @@ public class CalculatorEngine
                     {
                         throw new DivideByZeroException("Деление на 0 не разрешено");
                     }
+
                     _currentValue = _previousValue / _currentValue;
                     break;
             }
+
             _previousValue = _currentValue;
         }
 
@@ -141,6 +149,7 @@ public class CalculatorEngine
         {
             throw new InvalidOperationException("2 точки не могут быть введены");
         }
+
         _hasDot = true;
         _decimalPlaces = 0;
     }

@@ -1,4 +1,8 @@
-﻿using HW7._2.Calculator;
+﻿// <copyright file="TestCalculator.cs" author="AV-Bog">
+// under MIT License
+// </copyright>
+
+using HW7._2.Calculator;
 
 namespace Test._2.Calculator;
 
@@ -14,7 +18,7 @@ public class TestsCalculatorEngine
         _calculator = new CalculatorEngine();
         _calculator.EventHandler("C");
     }
-    
+
     private const double TOLERANCE = 0;
 
     [Test]

@@ -1,3 +1,7 @@
+// <copyright file="Program.cs" author="AV-Bog">
+// under MIT License
+// </copyright>
+
 namespace HW7._2.Calculator;
 
 static class Program
