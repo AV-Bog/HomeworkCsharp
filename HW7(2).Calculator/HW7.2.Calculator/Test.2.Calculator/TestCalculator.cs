@@ -1,8 +1,11 @@
 ﻿// <copyright file="TestCalculator.cs" author="AV-Bog">
 // under MIT License
+// Free use, modification, and distribution are permitted,
+// provided that the attribution and license notice are preserved.
+// more detailed: https://github.com/AV-Bog/HomeworkCsharp/blob/main/LICENSE
 // </copyright>
 
-using HW7._2.Calculator;
+using HW72.Calculator;
 
 namespace Test._2.Calculator;
 
@@ -10,110 +13,110 @@ using NUnit.Framework;
 
 public class TestsCalculatorEngine
 {
-    private CalculatorEngine _calculator;
+    private CalculatorEngine calculator;
 
     [SetUp]
     public void Setup()
     {
-        _calculator = new CalculatorEngine();
-        _calculator.EventHandler("C");
+        this.calculator = new CalculatorEngine();
+        this.calculator.EventHandler("C");
     }
 
-    private const double TOLERANCE = 0;
+    private const double Tolerance = 0;
 
     [Test]
     public void CheckingDigitsCombination()
     {
-        _calculator.EventHandler("1");
-        _calculator.EventHandler("1");
-        if (Math.Abs(_calculator.CurrentValue - 11) > TOLERANCE)
+        this.calculator.EventHandler("1");
+        this.calculator.EventHandler("1");
+        if (Math.Abs(this.calculator.CurrentValue - 11) > Tolerance)
         {
-            throw new AssertionException($"Expected 11, but got {_calculator.CurrentValue}");
+            throw new AssertionException($"Expected 11, but got {this.calculator.CurrentValue}");
         }
     }
 
     [Test]
     public void CheckAdditionNumbersLessThan10()
     {
-        _calculator.EventHandler("7");
-        _calculator.EventHandler("+");
-        _calculator.EventHandler("3");
-        _calculator.EventHandler("=");
-        if (Math.Abs(_calculator.CurrentValue - 10) > TOLERANCE)
+        this.calculator.EventHandler("7");
+        this.calculator.EventHandler("+");
+        this.calculator.EventHandler("3");
+        this.calculator.EventHandler("=");
+        if (Math.Abs(this.calculator.CurrentValue - 10) > Tolerance)
         {
-            throw new AssertionException($"Expected 10, but got {_calculator.CurrentValue}");
+            throw new AssertionException($"Expected 10, but got {this.calculator.CurrentValue}");
         }
     }
 
     [Test]
     public void CheckAdditionNumbersGreaterThan10()
     {
-        this._calculator.EventHandler("7");
-        this._calculator.EventHandler("7");
-        this._calculator.EventHandler("+");
-        _calculator.EventHandler("2");
-        _calculator.EventHandler("3");
-        _calculator.EventHandler("=");
-        if (Math.Abs(_calculator.CurrentValue - 100) > TOLERANCE)
+        this.calculator.EventHandler("7");
+        this.calculator.EventHandler("7");
+        this.calculator.EventHandler("+");
+        this.calculator.EventHandler("2");
+        this.calculator.EventHandler("3");
+        this.calculator.EventHandler("=");
+        if (Math.Abs(this.calculator.CurrentValue - 100) > Tolerance)
         {
-            throw new AssertionException($"Expected 100, but got {_calculator.CurrentValue}");
+            throw new AssertionException($"Expected 100, but got {this.calculator.CurrentValue}");
         }
     }
 
     [Test]
     public void CheckAdditionThenMultiplication()
     {
-        _calculator.EventHandler("8");
-        _calculator.EventHandler("+");
-        _calculator.EventHandler("2");
-        _calculator.EventHandler("*");
-        _calculator.EventHandler("3");
-        _calculator.EventHandler("=");
-        if (Math.Abs(_calculator.CurrentValue - 30) > TOLERANCE)
+        this.calculator.EventHandler("8");
+        this.calculator.EventHandler("+");
+        this.calculator.EventHandler("2");
+        this.calculator.EventHandler("*");
+        this.calculator.EventHandler("3");
+        this.calculator.EventHandler("=");
+        if (Math.Abs(this.calculator.CurrentValue - 30) > Tolerance)
         {
-            throw new AssertionException($"Expected 30, but got {_calculator.CurrentValue}");
+            throw new AssertionException($"Expected 30, but got {this.calculator.CurrentValue}");
         }
     }
 
     [Test]
     public void CheckDivisionBy0()
     {
-        _calculator.EventHandler("8");
-        _calculator.EventHandler("/");
-        _calculator.EventHandler("0");
-        Assert.Throws<DivideByZeroException>(() => _calculator.EventHandler("="));
+        this.calculator.EventHandler("8");
+        this.calculator.EventHandler("/");
+        this.calculator.EventHandler("0");
+        Assert.Throws<DivideByZeroException>(() => this.calculator.EventHandler("="));
     }
 
     [Test]
     public void CheckTwoPoints()
     {
-        _calculator.EventHandler("1");
-        _calculator.EventHandler("1");
-        _calculator.EventHandler(".");
-        _calculator.EventHandler("1");
-        Assert.Throws<InvalidOperationException>(() => _calculator.EventHandler("."));
+        this.calculator.EventHandler("1");
+        this.calculator.EventHandler("1");
+        this.calculator.EventHandler(".");
+        this.calculator.EventHandler("1");
+        Assert.Throws<InvalidOperationException>(() => this.calculator.EventHandler("."));
     }
 
     [Test]
     public void CheckingNonIntegerCalculations()
     {
-        _calculator.EventHandler("1");
-        _calculator.EventHandler("1");
-        _calculator.EventHandler(".");
-        _calculator.EventHandler("1");
-        _calculator.EventHandler("1");
-        _calculator.EventHandler("+");
-        _calculator.EventHandler("1");
-        _calculator.EventHandler("=");
-        if (_calculator.CurrentValue != 12.11)
+        this.calculator.EventHandler("1");
+        this.calculator.EventHandler("1");
+        this.calculator.EventHandler(".");
+        this.calculator.EventHandler("1");
+        this.calculator.EventHandler("1");
+        this.calculator.EventHandler("+");
+        this.calculator.EventHandler("1");
+        this.calculator.EventHandler("=");
+        if (Math.Abs(this.calculator.CurrentValue - 12.11) > Tolerance)
         {
-            throw new AssertionException($"Expected 12.11, but got {_calculator.CurrentValue}");
+            throw new AssertionException($"Expected 12.11, but got {this.calculator.CurrentValue}");
         }
     }
 
     [Test]
     public void CheckIncorrectInput()
     {
-        Assert.Throws<ArgumentException>(() => _calculator.EventHandler("a"));
+        Assert.Throws<ArgumentException>(() => this.calculator.EventHandler("a"));
     }
 }

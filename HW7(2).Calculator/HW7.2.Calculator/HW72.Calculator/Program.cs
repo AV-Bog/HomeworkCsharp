@@ -1,8 +1,11 @@
 // <copyright file="Program.cs" author="AV-Bog">
 // under MIT License
+// Free use, modification, and distribution are permitted,
+// provided that the attribution and license notice are preserved.
+// more detailed: https://github.com/AV-Bog/HomeworkCsharp/blob/main/LICENSE
 // </copyright>
 
-namespace HW7._2.Calculator;
+namespace HW72.Calculator;
 
 static class Program
 {

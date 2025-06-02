@@ -1,4 +1,4 @@
-﻿namespace HW7._2.Calculator;
+﻿namespace HW72.Calculator;
 
 partial class CalculatorForm
 {
@@ -33,20 +33,20 @@ partial class CalculatorForm
         button1 = new System.Windows.Forms.Button();
         button2 = new System.Windows.Forms.Button();
         button3 = new System.Windows.Forms.Button();
-        button17 = new System.Windows.Forms.Button();
+        buttonPlus = new System.Windows.Forms.Button();
         button4 = new System.Windows.Forms.Button();
         button5 = new System.Windows.Forms.Button();
         button6 = new System.Windows.Forms.Button();
-        button16 = new System.Windows.Forms.Button();
+        buttonMinus = new System.Windows.Forms.Button();
         button7 = new System.Windows.Forms.Button();
         button8 = new System.Windows.Forms.Button();
         button9 = new System.Windows.Forms.Button();
-        button15 = new System.Windows.Forms.Button();
-        button12 = new System.Windows.Forms.Button();
+        buttonMultiply = new System.Windows.Forms.Button();
+        buttonC = new System.Windows.Forms.Button();
         button0 = new System.Windows.Forms.Button();
-        button11 = new System.Windows.Forms.Button();
-        button14 = new System.Windows.Forms.Button();
-        button13 = new System.Windows.Forms.Button();
+        buttonDot = new System.Windows.Forms.Button();
+        buttonShare = new System.Windows.Forms.Button();
+        buttonEquals = new System.Windows.Forms.Button();
         textBox1 = new System.Windows.Forms.TextBox();
         tableLayoutPanel1.SuspendLayout();
         SuspendLayout();
@@ -61,20 +61,20 @@ partial class CalculatorForm
         tableLayoutPanel1.Controls.Add(button1, 0, 1);
         tableLayoutPanel1.Controls.Add(button2, 1, 1);
         tableLayoutPanel1.Controls.Add(button3, 2, 1);
-        tableLayoutPanel1.Controls.Add(button17, 3, 1);
+        tableLayoutPanel1.Controls.Add(buttonPlus, 3, 1);
         tableLayoutPanel1.Controls.Add(button4, 0, 2);
         tableLayoutPanel1.Controls.Add(button5, 1, 2);
         tableLayoutPanel1.Controls.Add(button6, 2, 2);
-        tableLayoutPanel1.Controls.Add(button16, 3, 2);
+        tableLayoutPanel1.Controls.Add(buttonMinus, 3, 2);
         tableLayoutPanel1.Controls.Add(button7, 0, 3);
         tableLayoutPanel1.Controls.Add(button8, 1, 3);
         tableLayoutPanel1.Controls.Add(button9, 2, 3);
-        tableLayoutPanel1.Controls.Add(button15, 3, 3);
-        tableLayoutPanel1.Controls.Add(button12, 0, 4);
+        tableLayoutPanel1.Controls.Add(buttonMultiply, 3, 3);
+        tableLayoutPanel1.Controls.Add(buttonC, 0, 4);
         tableLayoutPanel1.Controls.Add(button0, 1, 4);
-        tableLayoutPanel1.Controls.Add(button11, 2, 4);
-        tableLayoutPanel1.Controls.Add(button14, 3, 4);
-        tableLayoutPanel1.Controls.Add(button13, 3, 0);
+        tableLayoutPanel1.Controls.Add(buttonDot, 2, 4);
+        tableLayoutPanel1.Controls.Add(buttonShare, 3, 4);
+        tableLayoutPanel1.Controls.Add(buttonEquals, 3, 0);
         tableLayoutPanel1.Controls.Add(textBox1, 0, 0);
         tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
         tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -123,14 +123,14 @@ partial class CalculatorForm
         // 
         // button17
         // 
-        button17.Dock = System.Windows.Forms.DockStyle.Fill;
-        button17.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
-        button17.Location = new System.Drawing.Point(318, 111);
-        button17.Name = "button17";
-        button17.Size = new System.Drawing.Size(99, 102);
-        button17.TabIndex = 3;
-        button17.Text = "+";
-        button17.UseVisualStyleBackColor = true;
+        buttonPlus.Dock = System.Windows.Forms.DockStyle.Fill;
+        buttonPlus.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
+        buttonPlus.Location = new System.Drawing.Point(318, 111);
+        buttonPlus.Name = "buttonPlus";
+        buttonPlus.Size = new System.Drawing.Size(99, 102);
+        buttonPlus.TabIndex = 3;
+        buttonPlus.Text = "+";
+        buttonPlus.UseVisualStyleBackColor = true;
         // 
         // button4
         // 
@@ -167,14 +167,14 @@ partial class CalculatorForm
         // 
         // button16
         // 
-        button16.Dock = System.Windows.Forms.DockStyle.Fill;
-        button16.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
-        button16.Location = new System.Drawing.Point(318, 219);
-        button16.Name = "button16";
-        button16.Size = new System.Drawing.Size(99, 102);
-        button16.TabIndex = 7;
-        button16.Text = "-";
-        button16.UseVisualStyleBackColor = true;
+        buttonMinus.Dock = System.Windows.Forms.DockStyle.Fill;
+        buttonMinus.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
+        buttonMinus.Location = new System.Drawing.Point(318, 219);
+        buttonMinus.Name = "buttonMinus";
+        buttonMinus.Size = new System.Drawing.Size(99, 102);
+        buttonMinus.TabIndex = 7;
+        buttonMinus.Text = "-";
+        buttonMinus.UseVisualStyleBackColor = true;
         // 
         // button7
         // 
@@ -211,26 +211,26 @@ partial class CalculatorForm
         // 
         // button15
         // 
-        button15.Dock = System.Windows.Forms.DockStyle.Fill;
-        button15.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
-        button15.Location = new System.Drawing.Point(318, 327);
-        button15.Name = "button15";
-        button15.Size = new System.Drawing.Size(99, 102);
-        button15.TabIndex = 11;
-        button15.Text = "*";
-        button15.UseVisualStyleBackColor = true;
+        buttonMultiply.Dock = System.Windows.Forms.DockStyle.Fill;
+        buttonMultiply.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
+        buttonMultiply.Location = new System.Drawing.Point(318, 327);
+        buttonMultiply.Name = "buttonMultiply";
+        buttonMultiply.Size = new System.Drawing.Size(99, 102);
+        buttonMultiply.TabIndex = 11;
+        buttonMultiply.Text = "*";
+        buttonMultiply.UseVisualStyleBackColor = true;
         // 
         // button12
         // 
-        button12.BackColor = System.Drawing.Color.LightSalmon;
-        button12.Dock = System.Windows.Forms.DockStyle.Fill;
-        button12.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
-        button12.Location = new System.Drawing.Point(3, 435);
-        button12.Name = "button12";
-        button12.Size = new System.Drawing.Size(99, 106);
-        button12.TabIndex = 12;
-        button12.Text = "C";
-        button12.UseVisualStyleBackColor = false;
+        buttonC.BackColor = System.Drawing.Color.LightSalmon;
+        buttonC.Dock = System.Windows.Forms.DockStyle.Fill;
+        buttonC.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
+        buttonC.Location = new System.Drawing.Point(3, 435);
+        buttonC.Name = "buttonC";
+        buttonC.Size = new System.Drawing.Size(99, 106);
+        buttonC.TabIndex = 12;
+        buttonC.Text = "C";
+        buttonC.UseVisualStyleBackColor = false;
         // 
         // button0
         // 
@@ -245,37 +245,37 @@ partial class CalculatorForm
         // 
         // button11
         // 
-        button11.Dock = System.Windows.Forms.DockStyle.Fill;
-        button11.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
-        button11.Location = new System.Drawing.Point(213, 435);
-        button11.Name = "button11";
-        button11.Size = new System.Drawing.Size(99, 106);
-        button11.TabIndex = 14;
-        button11.Text = ".";
-        button11.UseVisualStyleBackColor = true;
+        buttonDot.Dock = System.Windows.Forms.DockStyle.Fill;
+        buttonDot.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
+        buttonDot.Location = new System.Drawing.Point(213, 435);
+        buttonDot.Name = "buttonDot";
+        buttonDot.Size = new System.Drawing.Size(99, 106);
+        buttonDot.TabIndex = 14;
+        buttonDot.Text = ".";
+        buttonDot.UseVisualStyleBackColor = true;
         // 
         // button14
         // 
-        button14.Dock = System.Windows.Forms.DockStyle.Fill;
-        button14.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
-        button14.Location = new System.Drawing.Point(318, 435);
-        button14.Name = "button14";
-        button14.Size = new System.Drawing.Size(99, 106);
-        button14.TabIndex = 15;
-        button14.Text = "/";
-        button14.UseVisualStyleBackColor = true;
+        buttonShare.Dock = System.Windows.Forms.DockStyle.Fill;
+        buttonShare.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
+        buttonShare.Location = new System.Drawing.Point(318, 435);
+        buttonShare.Name = "buttonShare";
+        buttonShare.Size = new System.Drawing.Size(99, 106);
+        buttonShare.TabIndex = 15;
+        buttonShare.Text = "/";
+        buttonShare.UseVisualStyleBackColor = true;
         // 
         // button13
         // 
-        button13.BackColor = System.Drawing.SystemColors.ActiveCaption;
-        button13.Dock = System.Windows.Forms.DockStyle.Fill;
-        button13.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
-        button13.Location = new System.Drawing.Point(318, 3);
-        button13.Name = "button13";
-        button13.Size = new System.Drawing.Size(99, 102);
-        button13.TabIndex = 16;
-        button13.Text = "=";
-        button13.UseVisualStyleBackColor = false;
+        buttonEquals.BackColor = System.Drawing.SystemColors.ActiveCaption;
+        buttonEquals.Dock = System.Windows.Forms.DockStyle.Fill;
+        buttonEquals.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)204));
+        buttonEquals.Location = new System.Drawing.Point(318, 3);
+        buttonEquals.Name = "buttonEquals";
+        buttonEquals.Size = new System.Drawing.Size(99, 102);
+        buttonEquals.TabIndex = 16;
+        buttonEquals.Text = "=";
+        buttonEquals.UseVisualStyleBackColor = false;
         // 
         // textBox1
         // 
@@ -287,7 +287,7 @@ partial class CalculatorForm
         textBox1.Size = new System.Drawing.Size(309, 103);
         textBox1.TabIndex = 17;
         textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-        textBox1.KeyDown += textBox1_KeyDown;
+        textBox1.KeyDown += TextBox1_KeyDown;
         // 
         // CalculatorForm
         // 
@@ -315,13 +315,13 @@ partial class CalculatorForm
     private System.Windows.Forms.Button button8;
     private System.Windows.Forms.Button button9;
     private System.Windows.Forms.Button button0;
-    private System.Windows.Forms.Button button11;
-    private System.Windows.Forms.Button button12;
-    private System.Windows.Forms.Button button13;
-    private System.Windows.Forms.Button button14;
-    private System.Windows.Forms.Button button15;
-    private System.Windows.Forms.Button button16;
-    private System.Windows.Forms.Button button17;
+    private System.Windows.Forms.Button buttonDot;
+    private System.Windows.Forms.Button buttonC;
+    private System.Windows.Forms.Button buttonEquals;
+    private System.Windows.Forms.Button buttonShare;
+    private System.Windows.Forms.Button buttonMultiply;
+    private System.Windows.Forms.Button buttonMinus;
+    private System.Windows.Forms.Button buttonPlus;
 
     private System.Windows.Forms.Button button1;
 
