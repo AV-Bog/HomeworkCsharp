@@ -3,6 +3,8 @@ on: [push, pull_request]
 
 jobs:
   build-Ubuntu:
+    if: github.ref != 'refs/heads/HW7.2'&&
+      (github.event_name != 'pull_request' || github.event.pull_request.head.ref != 'HW7.2')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

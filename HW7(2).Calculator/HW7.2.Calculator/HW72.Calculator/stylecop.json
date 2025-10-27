@@ -1,0 +1,8 @@
+{
+  "settings": {
+    "documentationRules": {
+      "copyrightText": "// <copyright file=\"{file}\" author=\"AV-Bog\">\n// under MIT License\n// Free use, modification, and distribution are permitted,\n// provided that the attribution and license notice are preserved.\n// more detailed: https://github.com/AV-Bog/HomeworkCsharp/blob/main/LICENSE\n// </copyright>",
+      "xmlHeader": false
+    }
+  }
+}
