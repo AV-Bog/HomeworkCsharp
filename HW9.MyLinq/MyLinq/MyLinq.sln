@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLinq", "MyLinq\MyLinq.csproj", "{BFAC5908-3894-4E4C-98A0-3D30C43B81D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMyLinq", "TestMyLinq\TestMyLinq.csproj", "{75F38473-4382-4F1C-984B-F84200BC3A3E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BFAC5908-3894-4E4C-98A0-3D30C43B81D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFAC5908-3894-4E4C-98A0-3D30C43B81D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFAC5908-3894-4E4C-98A0-3D30C43B81D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFAC5908-3894-4E4C-98A0-3D30C43B81D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75F38473-4382-4F1C-984B-F84200BC3A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75F38473-4382-4F1C-984B-F84200BC3A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75F38473-4382-4F1C-984B-F84200BC3A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75F38473-4382-4F1C-984B-F84200BC3A3E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
